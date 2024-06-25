@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/mycss.css'
 import './assets/_root.css'
 import './assets/cart.css'
+import './assets/libraryImage.css'
+import './assets/admin.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'

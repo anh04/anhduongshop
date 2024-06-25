@@ -25,17 +25,16 @@ var config = {
         baseURL: config_pth,
     });
 class ProductService {
-    getProducts =(page:number,limit:number)=>{
+    getProducts =(payload: {})=>{
         // console.log(qs.stringify(paras))
          return Axio.get<ResponseData>('product-list', {
-            params: {
-              page: page,
-              limit:limit
-            }
+            params: payload
           }).then(
              response => response.data
          )
-     }
+     }     
+    
+
      /**************************** */
      getProductId =(id:number)=>{
         return Axio.get<ProductType>('fashion', {

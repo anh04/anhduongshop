@@ -39,6 +39,9 @@
         </div>
     
     </div>
+    <div class="row my-3">
+        <div class="col border-t"></div>
+    </div>
 </div>    
 </template>
 <script lang="ts">
@@ -73,27 +76,27 @@
         created(){
             //console.log(this.prd_attributes.prd_img)
             //console.log(this.prd_attributes.addition_img)
-            this.specificImg = this.prd_attributes.prd_img
-            this.additionImg = this.prd_attributes.addition_img
+            this.specificImg = this.prd_attributes?.prd_img
+            this.additionImg = this.prd_attributes?.addition_img
 
-            this.prd_color = this.prd_attributes!.prd_color
+            this.prd_color = this.prd_attributes?.prd_color
             this.prod_sizes = {
-                s_amount:  this.prd_attributes.prd_size_s,
-                m_amount:  this.prd_attributes.prd_size_m,
-                l_amount:  this.prd_attributes.prd_size_l,
-                xl_amount:  this.prd_attributes.prd_size_xl
+                s_amount:  this.prd_attributes?.prd_size_s,
+                m_amount:  this.prd_attributes?.prd_size_m,
+                l_amount:  this.prd_attributes?.prd_size_l,
+                xl_amount:  this.prd_attributes?.prd_size_xl
             }
             this.prod_prices = {
-                s_price:  this.prd_attributes.prd_s_price,
-                m_price:  this.prd_attributes.prd_m_price,
-                l_price:  this.prd_attributes.prd_l_price,
-                xl_price:  this.prd_attributes.prd_xl_price
+                s_price:  this.prd_attributes?.prd_s_price,
+                m_price:  this.prd_attributes?.prd_m_price,
+                l_price:  this.prd_attributes?.prd_l_price,
+                xl_price:  this.prd_attributes?.prd_xl_price
             }
             this.prod_regular_price = {
-                s_regular_price:  this.prd_attributes.prd_s_regular_price,
-                m_regular_price:  this.prd_attributes.prd_m_regular_price,
-                l_regular_price:  this.prd_attributes.prd_l_regular_price,
-                xl_regular_price:  this.prd_attributes.prd_xl_regular_price
+                s_regular_price:  this.prd_attributes?.prd_s_regular_price,
+                m_regular_price:  this.prd_attributes?.prd_m_regular_price,
+                l_regular_price:  this.prd_attributes?.prd_l_regular_price,
+                xl_regular_price:  this.prd_attributes?.prd_xl_regular_price
             }
         },
         mounted() {

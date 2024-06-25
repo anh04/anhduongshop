@@ -16,13 +16,13 @@
                     <legend class="float-none w-auto f-16 bold">Images to upload to libray</legend>
                     <div class="list-images"></div>
                     <div class="row justify-content-center remove-center">
-                        <div class="file_upload col-md-6 col-xs-1 col-sm-1">
+                        <div class="file_upload col-md-6 col-xs-12 col-sm-12 text-right">
                             <label for="filenames">
                                 <a class="btn btn-success text-light" role="button" aria-disabled="false">Select files</a>
                             </label>
                             <input type="file" name="file[]" accept=".pdf,image/*" id="filenames" style="visibility: hidden; position: absolute;" multiple/>
                         </div>
-                        <div class="button-submit hidden col-md-6 col-xs-1 col-sm-1 text-left">
+                        <div class="button-submit hidden col-md-6 col-xs-12 col-sm-12 text-left">
                             <button id="submit-id" class="btn btn-danger" style="margin-top:10px">Upload to library </button>
                         </div>
                     </div>
@@ -31,6 +31,10 @@
                 <fieldset class="border p-4">
                     <legend class="float-none w-auto f-16 bold">Images in libray</legend>
                     <div id="media"> </div>
+
+                    <div class="w-100 text-center my-3 div-btn-add-to-addition-img" style="display: none;">
+                        <button class="btn btn-black w-167" id="btn-add-to-addition-img">Apply</button>
+                    </div>
                 </fieldset>
             </div>
 

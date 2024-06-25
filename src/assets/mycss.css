@@ -464,15 +464,6 @@ form#register-form input, form#register-form select{
     border-radius: 5px;
 }
 
-.hover-border{
-    cursor: pointer;
-    
-}
-
-.hover-border:hover{
-    border: 1px solid black;
-    
-}
 
 .b-r-5{
     border-radius: 5px;
@@ -664,7 +655,9 @@ form#register-form input, form#register-form select{
     height: 750px;
 }
 .h-900{
-    height: 900px;
+    max-height: 900px;
+    min-height: 600px;
+    height: 100%;
 }
 .hm-200{
     min-height: 200px;
@@ -801,6 +794,10 @@ div.file_upload {
 
 .r-2{
     right:2px;
+}
+
+.capitalize{
+    text-transform: capitalize;
 }
 /******************my-caousel*************/
 
@@ -951,6 +948,10 @@ img.carousel-control-prev-icon, img.carousel-control-next-icon{
 .m-x-12{
     margin-left: 12px;
     margin-right: 12px;
+}
+
+.m-l--15{
+    margin-left: -15px!important;
 }
 
 .row>div.pl--15{
@@ -1130,6 +1131,14 @@ fieldset .-mt-15{
 }
 
 .prd-image-container{
+    width: 400px;
+    display: block;
+    max-width: 100%;
+    /*position: absolute;*/
+}
+
+.prd-item-photo .prd-image-container{
+    height: 250px;
     width: 400px;
     display: block;
     max-width: 100%;
@@ -1559,6 +1568,11 @@ button.btn-pay-now{
 
 .hidden-cls{
     display: none!important;
+}
+
+.hidden{
+    display: none!important;
+
 }
 
 div.hidden-clss{

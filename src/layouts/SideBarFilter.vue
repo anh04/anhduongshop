@@ -1,42 +1,32 @@
 <template>
-    <div class="products">
-        <HeadSideBar title ="PRODUCTS"/>
-        <ul class="side-bar p-t-1">
-            <li class="bg-color-red">
-                <router-link to="/" class=""  >
-                    LAPTOP
-                </router-link>
-            </li>
-            <li class="bg-color-red">
-                <router-link to="/" class=""  >
-                    IPAD
-                </router-link>
-            </li>
-            <li class="bg-color-red">
-                <router-link to="/" class=""  >
-                    HANNDSET
-                </router-link>
-            </li>
-            <li class="text-uppercase bg-color-red">
-                <router-link to="/" class=""  >
-                    Computer accessories
-                </router-link>
-            </li>
-            <li class="text-uppercase bg-color-red">
-                <router-link to="/" class=""  >
-                    household electrical appliances
-                </router-link>
-            </li>
-            <li class="text-uppercase bg-color-red">
-                <router-link to="/fashions" class=""  >
-                    Fashions
-                </router-link>
-            </li>
-        </ul>
+    <div class="brands">
+        <HeadSideBar title ="BRANDS"/>
+        <div class="my-3 ms-2">
+            <FilterBrands :brands="brands"
+             @brands-filter = "filterBrand"
+            />
+        </div>
+    </div>
+
+    <div class="product-types">
+        <HeadSideBar title ="Product Types"/>
+        <div class="my-3 ms-2">
+            <FilterProductType :productTypes="filterProductType"
+            @product-type-filter = "filterPrdType"
+            />
+        </div>
+    </div>
+
+    <div class="product-types">
+        <HeadSideBar title ="Prices"/>
+        <div class="my-3 ms-2">
+            <FilterPrice :prices="prices"
+            @filter-price = "priceFilter" />
+        </div>
     </div>
 
     <div class="support">
-        <HeadSideBar title ="SUPPORT ONLINE"/>
+        <HeadSideBar title ="Support"/>
         <div class="border-red ">
             <div class="side-bar-bg">
                 <img src="../assets/images/online-support_2.png">
@@ -101,9 +91,33 @@
 
 <script lang="ts">
     import HeadSideBar from '@/components/menu/HeadSideBar.vue';
+    import FilterBrands from '@/components/menu/FilterBrands.vue';
+    import FilterPrice from '@/components/menu/FilterPrice.vue';
+    import FilterProductType from '@/components/menu/FilterProductType.vue';
     export default {    
     components: {
         HeadSideBar,
+        FilterBrands,
+        FilterPrice,
+        FilterProductType
     },
+    props:{
+        brands:[] as any [],
+        filterProductType:[] as any [],
+        prices: [] as any [],
+    },
+    methods: {
+        filterBrand(brands: []){
+            this.$emit('get-product-brands', brands);
+        },
+
+        filterPrdType(productTypes: []){
+            this.$emit('get-product-types', productTypes);
+        },
+
+        priceFilter(prices: []){
+            this.$emit('filter-price', prices);
+        }
+    }
     }
 </script>

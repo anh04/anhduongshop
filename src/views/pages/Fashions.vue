@@ -7,22 +7,23 @@
     <div class="h-100">
       <div class="row">
           <div class="col-md-3 mx-0 px-0">
-            <SideBar/>
+            <SideBarFilter :brands="filterBrand"
+             :filterProductType="filterProductType"
+             :prices ="prices"  
+             @get-product-brands = "getProductBrand"
+             @get-product-types = "getPrdTypes"
+             @filter-price = "getPrdPrice"
+             />
           </div>
           <div class="col-md-9 bg-e9ecef">
             <div class="row">
-              <HeadSideBarRight title="LAPTOP"/>
-            </div>
-            <div class="row" style="height: 250px;">
-              <div class="col col-md-4 col-sm-12">
-                  
-              </div>
-            </div>
-
-            <div class="row">
               <HeadSideBarRight title="FASHION"/>
             </div>
-            <Fashions /> 
+            <Fashions
+             :brandsdata ="brandsForFilter"
+             :prdTypesForFilter = "prdTypesForFilter"
+             :prdPriceFilter = "prdPriceFilter"
+            /> 
            
           </div>
            <!----end right------>
@@ -32,7 +33,7 @@
 
 <script lang="ts">
 import CarouselProject from '@/components/carousel/CarouselProject.vue'
-import SideBar from '@/layouts/SideBar.vue'
+import SideBarFilter from '@/layouts/SideBarFilter.vue'
 import HeadSideBarRight from '@/components/menu/HeadSideBarRight.vue'
 import type  ProductType  from "@/types/ProductType";
 
@@ -49,7 +50,7 @@ const { mapState, mapActions } = createNamespacedHelpers('fashionModule')
 export default {    
     components: {
         CarouselProject,
-        SideBar,
+        SideBarFilter,
         HeadSideBarRight,
         Fashions
     },
@@ -62,6 +63,9 @@ export default {
             limit: 5,
             lastPage: 1,
             pending: false,
+            brandsdata:[],
+            prdTypedata: [],
+            prdPricedata: [],
            // products: ref([]),
            //postList: ref([] as Product[]),
            imgs:['slider11.png','slider2.png'],
@@ -81,7 +85,18 @@ export default {
             {img:'150x150_13_2.png',title:'Belt'},
             {img:'150x150_14_2.png',title:'New'},
             {img:'150x150_15.png',title:'Best seller'},
-           ]
+           ],
+
+           filterBrand :['Lacoste','Louis Vuitton','Gucci','Calvin Klein','Adidas',
+            'Nike','Tommy','Levis','Hennes & Mauritz','Ralph Lauren'
+           ],
+
+           filterProductType: ['Short Sleeve Polos','Lightweight Polos','Pique Polos','Long Sleeve Polos',
+            'Wool Polos','Golf Polos','Rugby Shirts'
+           ],
+           prices:['5-10', '10-15', '15-20', '20-30', '30-50']
+
+
     }
   },
   beforeCreate: function() {
@@ -90,6 +105,70 @@ export default {
 	          myDiv.setAttribute("style", "max-width:1320px;");
         
     },
+
+    computed:{
+      brandsForFilter(){
+        return this.brandsdata
+      },
+
+      prdTypesForFilter(){
+        return this.prdTypedata
+      }
+      ,
+
+      prdPriceFilter(){
+        return this.prdPricedata
+      }
+    },
+
+    methods: {
+      ...mapActions([
+        'productFileter'
+        ]),
+
+      getProductBrand(brands: []){
+        this.brandsdata = brands
+
+        let payload ={
+        page: 1,
+        limit: 5,
+        typeGroup: 'Fashion',
+        brands:brands,
+        prdType:this.prdTypedata,
+        prdPrice:this.prdPricedata
+        }
+
+        this.productFileter(payload);
+      },
+
+      getPrdTypes(prdTypes: []){
+        this.prdTypedata = prdTypes
+        let payload ={
+        page: 1,
+        limit: 5,
+        typeGroup: 'Fashion',
+        brands:this.brandsdata,
+        prdType: prdTypes,
+        prdPrice:this.prdPricedata
+        }
+
+        this.productFileter(payload);
+      },
+
+      getPrdPrice(prices: []){
+        this.prdPricedata = prices
+        let payload ={
+        page: 1,
+        limit: 5,
+        typeGroup: 'Fashion',
+        brands:this.brandsdata,
+        prdType:this.prdTypedata,
+        prdPrice:prices
+        }
+
+        this.productFileter(payload);
+      }
+    }
 }
 </script>
 

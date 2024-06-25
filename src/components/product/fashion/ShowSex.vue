@@ -58,8 +58,7 @@ import { onMounted } from 'vue'
                 }
 
             },
-            changeValue(){
-                
+            changeValue(){                
                 this.$emit('checkbox-change', this.isSex);
             }
         },

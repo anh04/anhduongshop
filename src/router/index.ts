@@ -7,6 +7,7 @@ import Payment from '@/views/pages/Payment.vue'
 
 import ProductList from '@/views/admin/ProductList.vue'
 import Product from '@/views/admin/Product.vue'
+import Fashions from '@/views/pages/Fashions.vue'
 //import Pd1 from '@/views/admin/Pd1.vue'
 //import Pd2 from '@/views/admin/Pd2.vue'
 
@@ -68,6 +69,15 @@ const routes = [
         layout: 'admin'
       }
   },
+
+  {
+    path: '/fashions',
+    name: 'Fashions',
+    component:Fashions,
+    meta :{
+      layout: 'default'
+    }
+  }
 
  
 ]

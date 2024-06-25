@@ -4,7 +4,8 @@
         <div class="row -mt-15">
             <!--left-->
             <div class="col-6 col-ms-12 col-xs-12 ">
-                <ShowSex :sex="prdSex" />
+                <ShowSex  :sex="prd_sex" 
+                @checkbox-change="checkBoxParent"/>
             </div>
             <!--right-->
             <div class="col-6 col-ms-12 col-xs-12 ">
@@ -17,12 +18,11 @@
                 <div v-for="(index,component) in addCom" :key="index">
                     <AdditionAtt />
                 </div>
-
-                <ShowAdditionAtt v-if="isShow()"
-                 :secificImg="prd_img" 
-                 :additionImg="additionImg"
-                 :prd_colors ="prdColor"
-                 :prd_sizes: ="prdSize"  />
+                <div v-if="isShow()">
+                    <ShowAdditionAtt v-for="(prd_att,index) in prd_attributes_temp" :key="index"
+                    :prd_attributes="prd_att" /> 
+                </div>
+                 
             </div>
         </div>
     </fieldset>
@@ -39,9 +39,8 @@ import AdditionAtt from './AdditionAtt.vue';
             AdditionAtt,        
         },
         props:{
-            prdSex: String,
+            prd_sex: String,
             prdSize: String,
-            prdColor: String,
             multiSexes: String,
             multiSizes: String,
             additionImg:String,
@@ -51,7 +50,10 @@ import AdditionAtt from './AdditionAtt.vue';
         data(){
             return{
                 addCom: <any>[],
+                prdSexValue : this.prd_sex,
+                prd_attributes_temp:[]
             } 
+
         },
         computed:{
            
@@ -59,7 +61,12 @@ import AdditionAtt from './AdditionAtt.vue';
         created(){
 
         },
-        methods:{            
+        
+        methods:{   
+            checkBoxParent(sexChanged:any){
+               
+                this.$emit('parent-checkbox-change', sexChanged);
+            },         
             addComponent(){
                 let a = {k:1}
                 this.addCom.push(a)
@@ -72,8 +79,12 @@ import AdditionAtt from './AdditionAtt.vue';
                 }
             }
         },
+
         mounted(){
-           
+           console.log(this.prd_att)
+           if(this.prd_att !=null && this.prd_att !=undefined &&this.prd_att !=''){
+                this.prd_attributes_temp =JSON.parse(this.prd_att)
+            }
         }
     }
 </script>

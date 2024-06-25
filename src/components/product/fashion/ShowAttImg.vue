@@ -33,13 +33,16 @@
 
         },
         mounted() {
-            let imagesTemp = this.sameImages
+            if(this.sameImages !=undefined){
+                let imagesTemp = this.sameImages
             if(imagesTemp !='' && imagesTemp?.includes(",")){
                 this.images = imagesTemp.split(",")  
             }else{
                 this.images.push(imagesTemp!)
             }
-          console.log(this.images)
+            }
+           
+         // console.log(this.images)
         //    $('.normal-id').on('click','.product-images-span',function(){
         //         $('.product-images.selected').removeClass('selected')
         //         $(this).find('.product-images').addClass('selected')

@@ -6,7 +6,6 @@
              <div class="col-6 col-ms-12 col-xs-12 ">
                 <div class="row mt-3">
                     <div class="col">
-
                         <label>Batch code</label>
                         <input type="text" disabled="true" class="form-control mt-2 " name="prd_batch_code" id="prd_batch_code" v-model="prduct.prd_batch_code">
                     </div>
@@ -40,7 +39,7 @@
              <div class="col-6 col-ms-12 col-xs-12 ">
                 <div class="row mt-3">
                     <div class="col">
-                        <label>Product type</label>
+                        <label>Product type(*)</label>
                         <select class="form-select mt-2 " name="prd_type" id="prd_type" v-model="prduct.prd_type">
                             <option v-for="(item, index) in typeOption" :key="index" :value="item.prd_type_id" > {{item.prd_type_name}}</option>
                         </select>
@@ -74,12 +73,10 @@
             </div>
         </div>
     </form>
+    
     <ProductAttribute 
         :prd_sex="prduct.prd_sex"
         @parent-checkbox-change ="receiveCheckboxValue"
-        :prdSize="prduct.prd_size"
-        :prd_img="prduct.prd_img" 
-        :additionImg="prduct.prd_library" 
         :prd_att ="prduct.prod_attr"
         :key="componentKey"
        
@@ -141,20 +138,20 @@ export default{
                 prd_quantity:'',
                 prd_type :'',
                 prd_sku :'',
-                prd_price :'',
-                prd_regular_price :'',
+                // prd_price :'',
+                // prd_regular_price :'',
                 prd_disctiption :'',
                 prd_short_disctiption :'',
                 prd_sex  :'',
-                prd_size :'',
-                prd_color :'',
-                multi_colors :'',
-                multi_sizes :'',
-                multi_sexes:'',
+                // prd_size :'',
+                // prd_color :'',
+                // multi_colors :'',
+                // multi_sizes :'',
+                // multi_sexes:'',
                 prd_tag :'',
                 prd_relative :'',
-                prd_img :'',
-                prd_library :'',
+                // prd_img :'',
+                // prd_library :'',
                 prod_attr:'',
                 prod_special_point: '',
             },
@@ -308,8 +305,8 @@ export default{
                  this.prduct = response
 
                  //this.prduct.prd_size = response.prd_size
-                 this.prd_disctiption1 = response.prd_disctiption
-                 this.prod_special_point1 = response.prod_special_point
+                 this.prd_disctiption1 = response.prd_disctiption==null?'':response.prd_disctiption
+                 this.prod_special_point1 = response.prod_special_point==null?'':response.prod_special_point
                 // console.log(response.prod_attr)
                 
                 })
@@ -323,7 +320,7 @@ export default{
     save(){
         this.isSaving = true
         let id = this.$route.params.id
-        var prd_att = []
+        var prd_att = [] as any []
         let prd_att_item ={}
         var quantity =0
         $('.prd_att').each(function(){
@@ -334,18 +331,18 @@ export default{
                 prd_size_s: Number($(this).find('.prd_size_s').val()),
                 prd_size_m: Number($(this).find('.prd_size_m').val()),
                 prd_size_l: Number($(this).find('.prd_size_l').val()),
-                prd_size_xl: $(this).find('.prd_size_xl').val(),
+                prd_size_xl: Number($(this).find('.prd_size_xl').val()),
                 prd_img: $(this).find('.image-spec').val(),
                 addition_img: $(this).find('.image-added').val(),
 
-                prd_s_price :  $(this).find('.prd_s_price').val(),
-                prd_m_price:  $(this).find('.prd_m_price').val(),
-                prd_l_price:  $(this).find('.prd_l_price').val(),
-                prd_xl_price:  $(this).find('.prd_xl_price').val(),
-                prd_s_regular_price:  $(this).find('.prd_s_regular_price').val(),
-                prd_m_regular_price:  $(this).find('.prd_m_regular_price').val(),
-                prd_l_regular_price:  $(this).find('.prd_l_regular_price').val(),
-                prd_xl_regular_price:  $(this).find('.prd_xl_regular_price').val(),
+                prd_s_price :  Number($(this).find('.prd_s_price').val()),
+                prd_m_price:  Number($(this).find('.prd_m_price').val()),
+                prd_l_price:  Number($(this).find('.prd_l_price').val()),
+                prd_xl_price: Number( $(this).find('.prd_xl_price').val()),
+                prd_s_regular_price:  Number($(this).find('.prd_s_regular_price').val()),
+                prd_m_regular_price:  Number($(this).find('.prd_m_regular_price').val()),
+                prd_l_regular_price:  Number($(this).find('.prd_l_regular_price').val()),
+                prd_xl_regular_price:  Number($(this).find('.prd_xl_regular_price').val()),
             }
 
             prd_att.push(prd_att_item)
@@ -364,10 +361,11 @@ export default{
             prod_special_point: this.prod_special_point1
         }
        
-      //  console.log(id)
-        //return 
+       //console.log(prd_att)
+       // return 
         
         if(prd_att.length >0){
+            //Object.assign(data,{ "prod_attr": JSON.stringify(prd_att)});
             Object.assign(data,{ "prod_attr": JSON.stringify(prd_att)});
         }
 

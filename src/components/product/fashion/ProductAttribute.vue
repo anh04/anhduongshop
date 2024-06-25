@@ -16,7 +16,7 @@
 
                 </div>
                 <div v-for="(index,component) in addCom" :key="index">
-                    <AdditionAtt />
+                    <ShowAdditionAtt />
                 </div>
                 <div v-if="isShow()">
                     <ShowAdditionAtt v-for="(prd_att,index) in prd_attributes_temp" :key="index"
@@ -40,11 +40,6 @@ import AdditionAtt from './AdditionAtt.vue';
         },
         props:{
             prd_sex: String,
-            prdSize: String,
-            multiSexes: String,
-            multiSizes: String,
-            additionImg:String,
-            prd_img: String,
             prd_att: String
         },
         data(){
@@ -69,7 +64,7 @@ import AdditionAtt from './AdditionAtt.vue';
             },         
             addComponent(){
                 let a = {k:1}
-                this.addCom.push(a)
+                this.addCom.unshift(a)
             } ,
             isShow(){
                 if(this.prd_att !=null){
@@ -81,7 +76,7 @@ import AdditionAtt from './AdditionAtt.vue';
         },
 
         mounted(){
-           console.log(this.prd_att)
+           //console.log(this.prd_att)
            if(this.prd_att !=null && this.prd_att !=undefined &&this.prd_att !=''){
                 this.prd_attributes_temp =JSON.parse(this.prd_att)
             }

@@ -1,14 +1,12 @@
 
 
 <template>   
- 
     <div class="normal-id">
-      
       <div class="row mt-5 mb-2">
           <div class="col-md-6 col-sm-12 col-xm-12">
             <div class="justify-content-center d-flex bg-color-f6f6f4 relative" v-if="isShow">
-              <FashionCarousel
-              :proplibraryImages="firstProductImages"/>    
+              <FashionCarousel  :sameImages="`${fashion.multi_colors}`"  
+              :proplibraryImages="`${fashion.multi_colors}`"/>    
                     
             </div>
          </div>
@@ -24,22 +22,19 @@
                   <h1> <span class="p-title">{{fashion.prd_name }}</span> </h1>
 
                   <div class="mt-3">
-                    <span class="p-price">${{ Number(prd_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
-                    <span class="prd-regular-price ms-2">${{Number(prd_regular_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                    <span class="p-price">${{ Number(fashion.prd_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                    <span class="prd-regular-price ms-2">${{Number(fashion.prd_regular_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
                   </div>
                   <div class="f-15 my-3">Select color:</div>
-                  <div v-if="isShow && specificImgs.length >0">
-                    <ShowSpecificImg :is-class="true" :same-images="specificImgs"
-                    @get-product-img-index ="productImageIndex"/>
+                  <div v-if="isShow && fashion.multi_colors !=''">
+                    <show-same-img :is-class="true" :same-images="`${fashion.multi_colors}`"/>
                   </div>
                  
                   <div class="row my-3">
-                    <div class="col" v-if="firstZise.length > 0">
+                    <div class="col" v-if="fashion.multi_sizes !=null && fashion.multi_sizes !=''">
                       <div class="f-15" >Select size:</div>
                       <div class="d-flex flex-row  fit-box pb-3 mt-3">
-                      <span :class="['prd-size me-3 f-15 text-center capitalize',{selected:index==0}]" v-for="(size, index) in firstZise"
-                      @click = showPrice(size)
-                      >{{size}}</span>
+                      <span :class="['prd-size me-3 f-15 text-center',{selected:index==0}]" v-for="(size, index) in fashion.multi_sizes.split(',')">{{size}}</span>
                     </div>
                     </div>
                     <div class="col">
@@ -54,14 +49,13 @@
                   <div class="f-15 my-3">Add a quanlity:</div>
                   <AddCart :btnAddToCart="true" :btnBuyNow="true" />
                   <div class="mt-3"></div>
-
                   <ProductPurchaseInfo />
-                  <SpecialPoint :specialPoints="`${fashion.prod_special_point}`" />
+                  <SpecialPoint />
                 </div>
             </div>
           </div>
       </div>      
-      <div class="row mt-5 mb-2" v-html="fashion.prd_disctiption"  ></div>
+ 
     </div>
 </template>
 
@@ -78,7 +72,6 @@ import {externalStore} from '@/composables/cartComposable'
 import {testAcessState} from '@/composables/cart'
 
 import ShowSameImg from '@/components/common/ShowSameImg.vue';
-import ShowSpecificImg from '@/components/common/ShowSpecificImg.vue'
 import FashionCarousel from '@/components/product/FashionCarousel.vue';
 import ProductPurchaseInfo from '@/components/purchaseInfo/ProductPurchseInfo.vue';
 import SpecialPoint from '@/components/product/SpecialPoint.vue';
@@ -99,7 +92,6 @@ export default {
     SideBar,
     HeadSideBarRight,
     ShowSameImg,
-    ShowSpecificImg,
     FashionCarousel,
     ProductPurchaseInfo,
     SpecialPoint,
@@ -116,18 +108,7 @@ export default {
             postList: ref([] as Product[]),*/
             search: '',
             pending: false,           
-            imgs:['slider11.png','slider2.png'],
-          //  specificImgs :'',
-          //  sizes:'',
-          //  productImgs:'',
-          //  price: 0,
-          //  regularPrice: 0,
-          indx:0,
-          indexSize: '',
-          prd_regular_price: 0,
-          prd_price:0,
-          amount: 0,
-
+           imgs:['slider11.png','slider2.png'],
     }
   },
   beforeCreate() {
@@ -139,73 +120,8 @@ export default {
   computed:{
     ...mapState({
       fashion: state => state.fashion,
-      isShow: state => state.isShow,
-      specificImgs: state => state.specificImgs,
-      productImgs: state=>state.productImgs,
-      productSize: state=>state.productSize,
+      isShow: state => state.isShow
      }),
-
-     firstProductImages(){     
-       if(this.productImgs.length >0){    
-       
-        return this.productImgs[this.indx].addition_images
-       }else{
-        return []
-       }
-     },
-
-     firstZise(){      
-       let item = this.productSize[this.indx]
-      // console.log(item)
-       for(let x in item){
-        this.indexSize =x
-       // console.log("chay truoc="+this.indexSize)
-        break    
-       }
-      // console.log(item)
-       let zises =[] as any []
-       for(let x in item){
-       
-        zises = [...zises,x]
-       }
-       return zises
-     },
-
-    //  firstPrice(){      
-    //   let item = this.productSize[this.indx]
-    //   console.log("chay sau="+this.indexSize)
-    //   if(this.indexSize !=''){
-    //     console.log(item[this.indexSize] )
-    //     return item[this.indexSize] 
-    //   }else{
-    //     return {prd_regular_price: '0', prd_price: '0', amount: 0}
-    //   }
-      
-    //  }
-  },
-  watch: {
-    // indx (newValue,oldValue) {
-    //   console.log("new= "+newValue)
-    //    console.log("old= "+oldValue)
-    // }
-
-    indexSize(value){
-      let item = this.productSize[this.indx]
-       if(this.indexSize !=''){
-       // console.log(item[this.indexSize] )
-        let temp = item[this.indexSize] 
-
-        this.prd_regular_price = temp.prd_regular_price
-        this.prd_price = temp.prd_price
-        this.amount = temp.amount
-
-        return 
-      }else{
-        this.prd_regular_price = 0
-        this.prd_price = 0
-        this.amount = 0
-      }
-    }
   },
   methods: {
     ...mapActions([
@@ -232,25 +148,14 @@ export default {
       return testAcessState(20)//externalStore()
     },
 
-    productImageIndex(index:number){      
-      this.indx = index      
-    },
-
-    showPrice(value:string){
-        this.indexSize = value
-        
-    }
+    
   },
   created(){
     let id = this.$route.params.id
     this.getFashionID(id);       
   },
 
-  mounted(){      
-  
-
-   
-   
+  mounted(){        
    /*
     const plugin = document.createElement("script");
     plugin.setAttribute(

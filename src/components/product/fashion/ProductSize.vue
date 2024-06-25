@@ -83,25 +83,25 @@
         },
         created(){
             if(this.prod_sizes !=undefined){
-                this.prd_size_s =  this.prod_sizes!.s_amount
-                this.prd_size_m =  this.prod_sizes!.m_amount
-                this.prd_size_l =  this.prod_sizes!.l_amount
-                this.prd_size_xl =  this.prod_sizes!.xl_amount
+                this.prd_size_s =  this.prod_sizes?.s_amount
+                this.prd_size_m =  this.prod_sizes?.m_amount
+                this.prd_size_l =  this.prod_sizes?.l_amount
+                this.prd_size_xl =  this.prod_sizes?.xl_amount
             }
             
             if(this.prod_prices !=undefined){
-                this.prd_s_price = this.prod_prices!.s_price
-                this.prd_m_price = this.prod_prices!.m_price
-                this.prd_l_price = this.prod_prices!.l_price
-                this.prd_xl_price = this.prod_prices!.xl_price
+                this.prd_s_price = this.prod_prices?.s_price
+                this.prd_m_price = this.prod_prices?.m_price
+                this.prd_l_price = this.prod_prices?.l_price
+                this.prd_xl_price = this.prod_prices?.xl_price
             }
 
             if(this.prod_regular_price !=undefined){
 
-                this.prd_s_regular_price = this.prod_regular_price!.s_regular_price
-                this.prd_m_regular_price = this.prod_regular_price!.m_regular_price
-                this.prd_l_regular_price= this.prod_regular_price!.l_regular_price
-                this.prd_xl_regular_price= this.prod_regular_price!.xl_regular_price
+                this.prd_s_regular_price = this.prod_regular_price?.s_regular_price
+                this.prd_m_regular_price = this.prod_regular_price?.m_regular_price
+                this.prd_l_regular_price= this.prod_regular_price?.l_regular_price
+                this.prd_xl_regular_price= this.prod_regular_price?.xl_regular_price
             }          
 
         }

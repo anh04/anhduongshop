@@ -22,7 +22,7 @@
                 role="group"
                 aria-roledescription="slide"
                 aria-hidden="true"
-                v-for="(slice_img, index) in libraryImagesFunc" :key="slice_img" >
+                v-for="(slice_img, index) in images" :key="slice_img" >
                 <div class="content">
                     <div class="img-div h-900">
                         <img :src="`${path_img1}/${slice_img}`" alt="Anh Ho" />
@@ -34,7 +34,7 @@
     </div>
     <!--libraryImages-->
     <div  class="d-flex flex-column fit-box left-absolute" id="fashion-libray-img-left" >
-        <span  class="fashion-libray-img prd-img-page mb-2" v-for="(libryImg, index ) in libraryImagesFunc" :key="libryImg" style="cursor: pointer;"
+        <span  class="fashion-libray-img prd-img-page mb-2" v-for="(libryImg, index ) in libraryImages" :key="libryImg" style="cursor: pointer;"
         :slide_index="index" >            
             <img 
             v-bind:class="['img-thumbnail product-libary-img',{'selected':index==0}]" 
@@ -48,6 +48,7 @@
     const config = api_img_path
     export default{
         props:{
+            sameImages:String,
             proplibraryImages:String,
         },
         data(){
@@ -142,6 +143,8 @@
                 buttonPrevious.addEventListener('click', handlePrevious);
                 buttonNext.addEventListener('click', handleNext);
                 //review library image
+             
+
                 $('.normal-id').on('click','.fashion-libray-img',function(){
                 $('.product-libary-img.selected').removeClass('selected')
                 $(this).find('.product-libary-img').addClass('selected')
@@ -153,26 +156,21 @@
             }
 
         },
-        computed:{
-            libraryImagesFunc(){
+        created(){
+            let imagesTemp = this.sameImages
+            if(imagesTemp !='' && imagesTemp?.includes(",")){
+                this.images = imagesTemp.split(",")  
+            }else{
+                this.images.push(imagesTemp!)
+            }
+
             let imagesTempLibrary = this.proplibraryImages
            
             if(imagesTempLibrary !='' && imagesTempLibrary?.includes(",")){
-                return imagesTempLibrary.split(",")  
+                this.libraryImages = imagesTempLibrary.split(",")  
             }else{
-                return  this.libraryImages.push(imagesTempLibrary!)
+                this.libraryImages.push(imagesTempLibrary!)
             }
-            }
-        },
-        created(){
-            // console.log(this.proplibraryImages)
-            // let imagesTempLibrary = this.proplibraryImages
-           
-            // if(imagesTempLibrary !='' && imagesTempLibrary?.includes(",")){
-            //     this.libraryImages = imagesTempLibrary.split(",")  
-            // }else{
-            //     this.libraryImages.push(imagesTempLibrary!)
-            // }
 
         },
         mounted() {            
@@ -182,11 +180,6 @@
                 $this.setUpCarousel(item)
                
             });
-
-            $('.specific-product .product-images').off('click').on('click',function(){
-                $('.specific-product .prd-size.selected').removeClass('selected')
-                $('.specific-product .prd-size:first-child').addClass('selected')
-            })
         }
     }
 </script>
