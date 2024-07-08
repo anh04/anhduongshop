@@ -13,31 +13,29 @@
                                         -{{discount(el.prd_regular_price,el.prd_price)}}% 
                                     </div>
                            
-                                    <router-link :to="`/fashion/${item.prd_id}`" class="prd-item-photo" >
+                                    <router-link :to="`/laptop/${item.prd_id}`" class="prd-item-photo" >
                                         <span class="prd-image-container align-items-center d-flex">
                                           <img :src="`${path_img1}/${el.prd_img}`" class="prd-image-photo" />
                                         </span> 
                                     </router-link>
                                     <div class="prd-item-details flex-column">
                                         <strong class="prd-item-name">
-                                            <router-link to="`/fashion/${item.prd_id}`" class="prd-item-link" :title="item.prd_name" >
+                                            <router-link to="`/laptop/${item.prd_id}`" class="prd-item-link" :title="item.prd_name" >
                                                 <div class="special-product-label mid-mid text-only ">
                                                 <div class="text-center f-10 c-ff0000">
                                                     <span>MỚI</span>
                                                 </div>
                                             </div>
                                             {{item.prd_name}}
-                                            </router-link>
+                                            </router-link>                                            
                                         </strong>
+                                        <div class="f-14 mt-2 min-h-220" v-html="item.prod_special_point"> </div>
                                         <div class="d-inline fit-box">
                                             <span class="prd-price">${{ Number(el.prd_price).toLocaleString(undefined, {minimumFractionDigits: 2}) }}</span>
                                             <span class="prd-regular-price ms-2">${{ Number(el.prd_regular_price).toLocaleString(undefined, {minimumFractionDigits: 2}) }}</span>
                                         </div>
 
                                         <showSameImg :sameImages="`${el.prd_img}`" />
-                                        <div class="d-flex flex-row justify-content-end f-12 my-1 bold">
-                                            <i>Sold </i>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +62,7 @@ import { api_img_path } from '@/services/pathFile'
 
 import  { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapActions } = createNamespacedHelpers('fashionModule')
+const { mapState, mapActions } = createNamespacedHelpers('laptopModule')
 
 export default{
     props:{
@@ -77,9 +75,6 @@ export default{
     data(){
         return{
             path_img1:api_img_path,
-            // page: this.pageParent !=null?this.pageParent:1,
-            // limit: this.limitParent !=null?this.limitParent:5,
-            // brandsdata1 : this.brandsdata !=null?this.brandsdata:[],
             page: 1,
             limit: 5,
             brandsdata1 : [],
@@ -95,16 +90,16 @@ export default{
     },
     computed:{
     ...mapState({
-      products: state => state.fashions,
-      last_page: state => state.last_page,
-      total: state => state.total,
+      products: state => state.laptops,
+      last_page: state => state.laptopLastPage,
+      total: state => state.laptoTalPage,
      }),
 
   
      },
     methods: {
         ...mapActions([
-        'productList'
+        'laptopList'
         ]),
         /*
         discount function
@@ -132,16 +127,20 @@ export default{
                     let payload ={
                     page: this.page,
                     limit: this.limit,
-                    typeGroup: 'Fashion',
+                    typeGroup: 'Laptop',
                     brands:this.brandsdata,
                     prdType :this.prdTypesForFilter,
                     prdPrice : this.prdPriceFilter
                     }
                    // console.log(this.brandsdata)
-                    this.productList(payload);
+                    this.laptopList(payload);
                 }
         },
-        /* reRenderAttributes*/
+
+        /* 
+        reRenderAttributes
+        */
+
         reRenderAttributes(attributes:any){
         let prd_img = 'unknow.png'
         attributes = JSON.parse(attributes)
@@ -166,36 +165,7 @@ export default{
                             prd_price :  item.prd_s_price,
                             prd_regular_price :  item.prd_s_regular_price,
                         }
-                }else if(!isNaN(parseFloat(item.prd_size_m)) && 
-                    !isNaN(parseFloat(item.prd_m_regular_price)) &&
-                    !isNaN(parseFloat(item.prd_m_price)) ){
-                        return itemAttr ={
-                            amount: item.prd_size_m,
-                            prd_img : prd_img,
-                            prd_price :  item.prd_m_price,
-                            prd_regular_price :  item.prd_m_regular_price,
-                        }
-                }
-                else if(!isNaN(parseFloat(item.prd_size_l)) && 
-                    !isNaN(parseFloat(item.prd_l_regular_price)) &&
-                    !isNaN(parseFloat(item.prd_l_price)) ){
-                        return {
-                            amount: item.prd_size_l,
-                            prd_img : prd_img,
-                            prd_price :  item.prd_l_price,
-                            prd_regular_price :  item.prd_l_regular_price,
-                        }
-                }
-                else if(!isNaN(parseFloat(item.prd_size_xl)) && 
-                    !isNaN(parseFloat(item.prd_xl_regular_price)) &&
-                    !isNaN(parseFloat(item.prd_xl_price)) ){
-                        return itemAttr ={
-                            amount: item.prd_size_xl,
-                            prd_img : prd_img,
-                            prd_price :  item.prd_xl_price,
-                            prd_regular_price :  item.prd_xl_regular_price,
-                        }
-                }            
+                }    
                 
         })
 
@@ -212,10 +182,10 @@ export default{
         let payload ={
         page: 1,
         limit: 5,
-        typeGroup: 'Fashion'
+        typeGroup: 'Laptop'
         }
 
-        this.productList(payload);
+        this.laptopList(payload);
     }
 }
 </script>

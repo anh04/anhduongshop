@@ -20,7 +20,7 @@
             <div class="row">
               <HeadSideBarRight title="FASHION"/>
             </div>
-            <Fashions
+            <Laptops
              :brandsdata ="brandsForFilter"
              :prdTypesForFilter = "prdTypesForFilter"
              :prdPriceFilter = "prdPriceFilter"
@@ -31,7 +31,7 @@
     </div>
     </div>
   </div>
- 
+
 </template>
 
 <script lang="ts">
@@ -43,19 +43,19 @@ import type  ProductType  from "@/types/ProductType";
 import type ResponseData from "@/types/ResponseData";
 import ProductService from '@/services/productsService'
 import {productDiscount} from '@/composables/myComposable'
-import Fashions from '@/components/product/fashion/Fashions.vue';
+import Laptops from '@/components/product/lapPhone/Laptops.vue';
 import { api_img_path } from '@/services/pathFile'
 
 import  { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapActions } = createNamespacedHelpers('fashionModule')
+const { mapState, mapActions } = createNamespacedHelpers('laptopModule')
 
 export default {    
     components: {
         CarouselProject,
         SideBarFilter,
         HeadSideBarRight,
-        Fashions
+        Laptops
     },
     data() {
     return {
@@ -90,14 +90,12 @@ export default {
             {img:'150x150_15.png',title:'Best seller'},
            ],
 
-           filterBrand :['Lacoste','Louis Vuitton','Gucci','Calvin Klein','Adidas',
-            'Nike','Tommy','Levis','Hennes & Mauritz','Ralph Lauren'
-           ],
+           filterBrand :['Laptop HP','DELL','ASUS','LENOVO','MAC'],
 
-           filterProductType: ['Short Sleeve Polos','Lightweight Polos','Pique Polos','Long Sleeve Polos',
-            'Wool Polos','Golf Polos','Rugby Shirts'
+           filterProductType: ['Laptop HP','ASSUS','DELL','Lenovo',
+            'MAC'
            ],
-           prices:['5-15', '15-25', '25-40', '40-100']
+           prices:['500-100', '1000-2000', '2000-3000']
 
 
     }
@@ -126,7 +124,7 @@ export default {
 
     methods: {
       ...mapActions([
-        'productFileter'
+        'laptopFileter'
         ]),
 
       getProductBrand(brands: []){
@@ -135,13 +133,13 @@ export default {
         let payload ={
         page: 1,
         limit: 5,
-        typeGroup: 'Fashion',
+        typeGroup: 'Laptop',
         brands:brands,
         prdType:this.prdTypedata,
         prdPrice:this.prdPricedata
         }
 
-        this.productFileter(payload);
+        this.laptopFileter(payload);
       },
 
       getPrdTypes(prdTypes: []){
@@ -149,13 +147,13 @@ export default {
         let payload ={
         page: 1,
         limit: 5,
-        typeGroup: 'Fashion',
+        typeGroup: 'Laptop',
         brands:this.brandsdata,
         prdType: prdTypes,
         prdPrice:this.prdPricedata
         }
 
-        this.productFileter(payload);
+        this.laptopFileter(payload);
       },
 
       getPrdPrice(prices: []){
@@ -163,13 +161,13 @@ export default {
         let payload ={
         page: 1,
         limit: 5,
-        typeGroup: 'Fashion',
+        typeGroup: 'Laptop',
         brands:this.brandsdata,
         prdType:this.prdTypedata,
         prdPrice:prices
         }
 
-        this.productFileter(payload);
+        this.laptopFileter(payload);
       }
     }
 }

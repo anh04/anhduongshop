@@ -5,6 +5,7 @@ import qs from 'qs'
 import type  ProductType  from "@/types/ProductType";
 import type ResponseData from "@/types/ResponseData";
 import type DiscountType from '@/types/DiscountType'
+import type FormatShipmentOrder from '@/types/FormatShipmentOrder';
 
 
 const config_pth = 'http://localhost:8000/api/'
@@ -25,15 +26,20 @@ var config = {
         baseURL: config_pth,
     });
 class ProductService {
-    getProducts =(payload: {})=>{
+    getProducts2 =(payload: {})=>{
         // console.log(qs.stringify(paras))
-         return Axio.get<ResponseData>('product-list', {
-            params: payload
-          }).then(
+         return Axio.get<ResponseData>('product-list').then(
              response => response.data
          )
-     }     
-    
+     }   
+     getProducts =(payload: {})=>{
+      // console.log(qs.stringify(paras))
+       return Axio.get<ResponseData>('product-list', {
+          params: payload
+        }).then(
+           response => response.data
+       )
+   }    
 
      /**************************** */
      getProductId =(id:number)=>{
@@ -105,7 +111,30 @@ class ProductService {
           response => response.data)
       }
 
-  
+       /**************************** */
+       getorders =(user_id:number)=>{
+        return Axio.get('orders'
+          // , {
+          //   params: {
+          //     user_id: user_id,
+          //   }
+          // }
+        ).then(response => response.data); 
+     }
+
+      /**************************** */
+      getorder =(order_id:number)=>{
+        return Axio.get('order', {
+            params: {
+              order_id: order_id,
+            }
+          }
+        ).then(response => response.data); 
+      }
+      /**************************** */
+      login =(params:any)=>{
+        return Axio.post('login', qs.stringify(params), config).then(response => response.data); 
+      }  
   }
   
   

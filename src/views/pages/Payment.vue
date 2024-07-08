@@ -1,5 +1,5 @@
 <template>
-   <div id="p-cart">
+   <div id="p-cart" class="container">
     <div class="row mb-4">
         <div class="col">
             <div class="d-flex f-18 mt-3" style="cursor: pointer">
@@ -90,13 +90,13 @@
                 <div class="row my-3">
                     <div class="col col-md-12 col-sm-12 ">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input el" key_clmn="shipment_company" type="radio" name="shipment_company"
-                                    value="home" id="shipment_company" v-model="shipment_company">
+                            <input class="form-check-input el" key_clmn="shipment_company" type="radio" name="shipment_to_company"
+                                    value="0"  v-model="shipment_to_company">
                             <label class="form-check-label" for="at_company">At Your Office</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" checked="checked" type="radio" name="shipment_company"
-                                    id="at_home" value="company" v-model="shipment_company">
+                            <input class="form-check-input" checked="checked" type="radio" name="shipment_to_company"
+                                    id="at_home" value="1" v-model="shipment_to_company">
                             <label class="form-check-label" for="at_home">At Your Home</label>
                         </div>
                     </div>
@@ -189,7 +189,7 @@ export default{
         shipment_zipcode: '',
         shipment_address: '',
         shippment_note: '',
-        shipment_company: '',
+        shipment_to_company: '',
         fast_delivery: '',
         method: '',
 
@@ -220,7 +220,7 @@ export default{
                 shipment_zipcode: this.shipment_zipcode,
                 shipment_address: this.shipment_address,
                 shippment_note: this.shippment_note,
-                shipment_company: this.shipment_company,
+                shipment_to_company: this.shipment_to_company,
                 fast_delivery: this.fast_delivery
                 
             }
@@ -248,11 +248,11 @@ export default{
                 discount_value:discount_value,
                 method:method
             }).then((response) => {
-                localStorage.removeItem('yourCart');  
-                localStorage.removeItem('shareDiscount');  
-
-                store.dispatch('addProductToCart', [])   
+                  
                 if(response.order_id !=undefined){
+                    localStorage.removeItem('yourCart');  
+                    localStorage.removeItem('shareDiscount');  
+                    store.dispatch('addProductToCart', []) 
                     $('#modal-success .modal-title').text('Add cart successfully');
 
                     ($('#modal-success') as any).modal('show')
@@ -271,7 +271,7 @@ export default{
                 }             
                 })
                 .catch((e: Error) => {
-               // console.log(e);
+                console.log(e);
                 });
             
         },
@@ -282,15 +282,15 @@ export default{
                 this.stateList = response                
                 })
                 .catch((e: Error) => {
-               // console.log(e);
+                console.log(e);
                 });
         },
         gCities(state: string){
-            console.log(state)
+            
             StateService.getCities(state)
                 .then((response) => {
                 this.cities = response
-                console.log(this.cities);
+              
                 })
                 .catch((e: Error) => {
                 console.log(e);

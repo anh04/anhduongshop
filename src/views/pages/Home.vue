@@ -1,7 +1,8 @@
 
 
 <template>
-   <div class="row">
+  <div class="container bg-white">
+    <div class="row">
       <CarouselProject :slides="imgs" />
     </div>
     <div class="h-100">
@@ -13,11 +14,7 @@
             <div class="row">
               <HeadSideBarRight title="LAPTOP"/>
             </div>
-            <div class="row" style="height: 250px;">
-              <div class="col col-md-4 col-sm-12">
-                  
-              </div>
-            </div>
+            <Laptops />
 
             <div class="row">
               <HeadSideBarRight title="FASHION"/>
@@ -28,6 +25,8 @@
            <!----end right------>
     </div>
     </div>
+  </div>
+  
 </template>
 
 <script lang="ts">
@@ -40,18 +39,18 @@ import type ResponseData from "@/types/ResponseData";
 import ProductService from '@/services/productsService'
 import {productDiscount} from '@/composables/myComposable'
 import Fashions from '@/components/product/fashion/Fashions.vue';
+import Laptops from '@/components/product/lapPhone/Laptops.vue';
 import { api_img_path } from '@/services/pathFile'
 
 import  { createNamespacedHelpers } from 'vuex'
-
-const { mapState, mapActions } = createNamespacedHelpers('fashionModule')
 
 export default {    
     components: {
         CarouselProject,
         SideBar,
         HeadSideBarRight,
-        Fashions
+        Fashions,
+        Laptops
     },
     data() {
     return {

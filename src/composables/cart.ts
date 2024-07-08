@@ -38,10 +38,12 @@ import type DiscountType from '@/types/DiscountType'
             item_cart['prd_color']= el.find('.prd_color').val()+''
             item_cart['prd_size']= el.find('.prd_size').val()+''
             item_cart['prd_sex']= el.find('.prd_sex').val()+''
+            item_cart['color_selected'] = el.find('.color-selected').val()+''
         }else{
             item_cart['prd_color'] = el.find('.img-selected-source.selected').attr('specificimage')+''
             item_cart['prd_size']= el.find('.prd-size.selected').text()
             item_cart['prd_sex']= el.find('.prd-sex.selected').text() 
+            item_cart['color_selected'] = el.find('.color-selected').text()
         }
         
         var yourCart =<CartType[]>([]);
@@ -100,10 +102,12 @@ import type DiscountType from '@/types/DiscountType'
         item_cart['prd_color']= el.find('.prd_color').val()+''
         item_cart['prd_size']= el.find('.prd_size').val()+''
         item_cart['prd_sex']= el.find('.prd_sex').val()+''
+        item_cart['color_selected'] = el.find('.color-selected').val()+''
     }else{
         item_cart['prd_color'] = el.find('.img-selected-source.selected').attr('specificimage')+''
         item_cart['prd_size']=el.find('.prd-size.selected').text() 
         item_cart['prd_sex']=el.find('.prd-sex.selected').text() 
+        item_cart['color_selected'] = el.find('.color-selected').text()
     }
 
     yourCart.push(item_cart)

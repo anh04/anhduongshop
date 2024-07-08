@@ -21,7 +21,7 @@
                     </div>
                     <div class="row f-18 mt-2">
                         <div class="d-flex">
-                            <span class="c-666 f-w-400 c-666 title-header">COLOR: TEA</span>
+                            <span class="c-666 f-w-400 c-666 title-header">COLOR: {{ item.color_selected}}</span>
                             <span class="c-666 f-w-400 c-666 ps-5 title-header">SIZE: {{ item.prd_size }}</span>
                             <span class="c-666 f-w-400 c-666 ps-5 title-header">SEX: {{ item.prd_sex}}</span>
                         </div>
@@ -30,6 +30,7 @@
                         <div class="d-flex">    
                             <div  class="d-inline fit-box f-15 pb-3 mt-3 d-flex d-flex-row" >
                                 <div class="input-group closest-btn-action">
+                                    <input type="hidden" class="color-selected" v-model="item.color_selected">
                                     <input type="hidden" class="prd_id" v-model="item.prd_id">
                                     <button class="btn btn-outline-secondary minus-prduct-btn" type="button" >-</button>
                                     <input type="text" class="form-control amount-prduct" v-model="item.amount" placeholder="" aria-label="Example text with button addon">

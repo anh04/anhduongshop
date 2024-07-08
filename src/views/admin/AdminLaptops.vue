@@ -2,7 +2,7 @@
  <div class="container">
     <div class="card border-none bg-white mt-4">
         <div class="card-header text-right">
-            <RouterLink to="product">
+            <RouterLink to="laptop">
                 <button type="button" class="btn btn-info">Add Product</button>
             </RouterLink>
         </div>
@@ -11,15 +11,14 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th style="width:350px">Name</th>
                     <th >Type</th>
-                    <th >Sex</th>
+                    <th >Size</th>
                     <th>
                     <div class="row">
                         <div class="col-4">Image</div>
                        <div class="col-8">
-                            <div class="row">                                
-                                    <div class="col">Zise</div>
+                            <div class="row">   
                                     <div class="col text-right">Amount</div>
                                     <div class="col text-right">Regular Price</div>
                                     <div class="col text-right">Price</div> 
@@ -35,7 +34,7 @@
                         <td>{{index+1}}</td>
                         <td>{{ item.prd_name}}</td>
                         <td>{{ item.prd_type_name }}</td>
-                        <td>{{ item.prd_sex }}</td>
+                        <td>{{ item.prod_size_inch }}</td>
                         <td>
                             <div v-if="item.prod_attr !=null && item.prod_attr !=''">                            
                                 <div class="row"  v-for="(el,indx) in JSON.parse(item.prod_attr)">
@@ -44,35 +43,17 @@
                                     </div>
                                     <div class="col col-md-8">
                                         <div class="row">
-                                            <div class="col col-md-3 px-0 text-left">Small</div>
                                             <div class="col  pe-0 text-right">{{el.prd_size_s}}</div>
                                             <div class="col  pe-0 text-right">{{el.prd_s_regular_price}}</div>
                                             <div class="col   text-right">{{el.prd_s_price}}</div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col col-md-3 px-0 text-left">Medium</div>
-                                            <div class="col pe-0 text-right">{{el.prd_size_m}}</div>
-                                            <div class="col pe-0 text-right">{{el.prd_m_regular_price}}</div>
-                                            <div class="col  text-right">{{el.prd_m_price}}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3 px-0 text-left">Large</div>
-                                            <div class="col pe-0 text-right">{{el.prd_size_l}}</div>
-                                            <div class="col pe-0 text-right">{{el.prd_l_regular_price}}</div>
-                                            <div class="col  text-right">{{el.prd_l_price}}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3 px-0 text-left">XLarge</div>
-                                            <div class="col pe-0 text-right">{{el.prd_size_xl}}</div>
-                                            <div class="col pe-0 text-right">{{el.prd_xl_regular_price}}</div>
-                                            <div class="col  text-right">{{el.prd_xl_price}}</div>
-                                        </div>
+                                      
                                     </div>
                                 </div>  
                             </div>                          
                         </td>
                         <td>
-                            <router-link  :to="`/admin/product/${item.prd_id}`">Edit</router-link >
+                            <router-link  :to="`/admin/laptop/${item.prd_id}`">Edit</router-link >
                         </td>
                     </tr>
                 </tbody>
@@ -118,7 +99,8 @@ export default{
             limit: 5, 
             pending: false,
             currentPage: 1,
-            lastPages:1
+            lastPages:1,
+            typeGroup : 'Laptop'
         };
     },
     beforeCreate() {
@@ -144,7 +126,8 @@ export default{
             // let limit= this.limit
             let payload ={
                 page : this.page,
-                limit : this.limit
+                limit : this.limit,
+                typeGroup: this.typeGroup
             }
 
                 ProductService.getProducts(payload).then((res)=>{
@@ -169,21 +152,21 @@ export default{
         },
         
         onPageChange(page: number){
+            this.currentPage = page;
+            let limit= this.limit
             let payload ={
                 page : page,
-                limit : this.limit
+                limit : this.limit,
+                typeGroup: this.typeGroup
             }
+
             ProductService.getProducts(payload).then((res)=>{
                     this.products = res.data
                 })
         },
     },
     created() {
-            // let payload = {
-            //     page: this.page,
-            //     limit: this.limit
-            // };
-            // this.adminProductList(payload);
+        this.firstLoad();
         },
     mounted() {
         // let payload = {
@@ -191,7 +174,7 @@ export default{
         //     limit: this.limit
         // };
         
-        this.firstLoad();
+        // this.firstLoad();
     }
    
 }

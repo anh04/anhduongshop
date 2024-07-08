@@ -17,7 +17,7 @@
                     </span>
                 </div>
                 <div class="col-md-1 col-lg-2 col-sm-1 media-xs-1 force-hidden">
-                    <div class="row justify-content-center align-items-center  show-modal-login" style="cursor:pointer">
+                    <div class="row justify-content-center align-items-center  show-modal-login" @click="showModalLogin" style="cursor:pointer">
                         <div class="col-md-12 col-lg-3">
                             <div class="box-size-2  bg-orange">
                                 <span class="fa-color-gray-light child-box">
@@ -136,10 +136,21 @@ export default{
             // }else{
 
             // }
+        },
+        showModalLogin(){
+            ($('#login-modal') as any).modal('show')
         }
     },
     mounted(){
         //this.checkCart()
+        // const plugin = document.createElement("script");
+		// 	plugin.setAttribute(
+		// 	  "src",
+		// 	  "/js/login/fashion.js"
+		// 	);
+		// 	plugin.async = true;
+		// 	document.head.appendChild(plugin);
+        
     }
 }
 </script>

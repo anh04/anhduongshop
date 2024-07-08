@@ -7,6 +7,7 @@ export default interface CartType {
   prd_color: string ;
   prd_size: string;
   prd_sex: string;
+  color_selected:string,
   }
 
   interface Foo {

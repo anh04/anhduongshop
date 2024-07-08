@@ -8,6 +8,7 @@ import type  ProductType  from "@/types/ProductType";
 import type {StateType} from '@/types/StateType';
 
 import fashionModule from './fashionModule';
+import laptopModule from './laptopModule'
 import adminProductModule from './adminProductModule';
 import ProductService from '@/services/productsService'
 
@@ -23,7 +24,8 @@ export default createStore<StateType>({
   },
   modules: {
     fashionModule,
-    adminProductModule
+    adminProductModule,
+    laptopModule
   },
   actions:{
     addProductToCart ({ state, commit }, product:CartType) {
@@ -54,6 +56,19 @@ export default createStore<StateType>({
             console.log(e);
           });
       },
+
+    login ({ state, commit }, payload:any) {
+      ProductService.login(payload)
+          .then((response) => {
+           // console.log(response);
+          commit('COMMIT_LOGIN', response)
+          
+            
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
+    },
   },
   mutations: {
     ADD_PRODUCT_TO_CART(state:any, payload: CartType) {
@@ -67,10 +82,15 @@ export default createStore<StateType>({
     DISCOUNT_CHANGE(state:any, payload: DiscountType) {
       state.discount =payload
     },
+
+    COMMIT_LOGIN(state:any, payload: UserType) {
+      state.login =payload
+      localStorage.setItem('token',JSON.stringify(payload.token));
+    },
   },
 
 
-   // getters:{},
+   // getters:{}, 
 
    // 
   })

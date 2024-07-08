@@ -10,6 +10,7 @@ library_images.prototype.constructor = library_images;
 library_images.prototype = {
     init: function(){
         $("#filenames").on('change', function(event){
+            
             //this.files.item(i).name
             var fileBloc ='';
                 if (this.files) {
@@ -41,7 +42,7 @@ library_images.prototype = {
                     }
                     this.files = prd_f.file_tranfer.files;
 
-                    $(".list-images").on('click', '.btn-delete-image', function(){
+                    $(".list-images").off('click').on('click', '.btn-delete-image', function(){
                         let name = $(this).closest('.box-image').find('.file-name').text();
                         for(let i = 0; i < prd_f.file_tranfer.items.length; i++){
                             // Correspondance du fichier et du nom
@@ -54,7 +55,7 @@ library_images.prototype = {
 
 
                         $(this).parents('.box-image').remove();
-                        var count = $('.list-images .box-image').find('input').length
+                        var count = $('.list-images .box-image').length
                         
                         if(count < 1){
                             $('.button-submit').addClass('hidden')
@@ -129,10 +130,6 @@ library_images.prototype = {
             }
         })
 
-            /*******************event*********************/
-            $('#submit-id').off('click').on('click',function(){
-                prd_f.uploadImgToLibraries()
-            });
 
     },
     /*********************************************************/
@@ -223,9 +220,7 @@ library_images.prototype = {
                     //       //  $me.closest('.clicked.addition-images').find('.image-added-div').html(span)
                     //     }
                     // }
-                    
-                  
-
+                                      
                     
                 })
 
@@ -272,6 +267,11 @@ library_images.prototype = {
                 })
 
                 $('#library-modal').modal('show')
+
+                  /*******************event*********************/
+                  $('#submit-id').off('click').on('click',function(){
+                    prd_f.uploadImgToLibraries($me)
+                });
             
               
             }
@@ -280,6 +280,7 @@ library_images.prototype = {
 
     /*********************************************************/
     show_libraries_from_disk:function($me, product_type){
+        $('#library-modal #media').html('')
         var link3 = api_link+'libraries';
         $.ajax({
             headers: {
@@ -315,7 +316,7 @@ library_images.prototype = {
                 $('#library-modal #media').html(rows)
                 
                 //event
-                $('#library-modal #media .img-selected').on('click',function(){
+                $('#library-modal #media .img-selected').off('click').on('click',function(){
                     
                     var image_name = $(this).attr('img_name')
                     if($me.closest('.clicked').hasClass('specific-image')){
@@ -419,6 +420,7 @@ library_images.prototype = {
             //contentType: 'application/json',
             error : function (status,xhr,error) { },
             success: function (res) {
+                //console.log(res.files.length)
                 if(res.files.length > 0){
                     $('.list-images').html('')
                     prd_f.showLibrayImg(res,$me)
@@ -430,35 +432,80 @@ library_images.prototype = {
         });
     },
     /*********************************************************/
+  
     showLibrayImg:function(data,$me){
        
         if(data.files.length > 0){
+            var cols =''
             data.files.forEach(function(item){
-               var cols ='<div class="col mx-1 my-2">' +
-                    ' <img src="'+libary_path+''+item.filenames+'" img_name="'+item.filenames+'" style="width:60px; cursor:pointer" class="img-selected">' +
+                    cols +='<div class="col mx-1 my-2 d-flex flex-column hover-border text-center mx-auto">' +
+                    ' <img src="'+libary_path+''+item.filenames+'" img_name="'+item.filenames+'" style="width:60px; cursor:pointer" class="img-selected mx-auto">' +
+                    '<span class="mt-1">'+item.filenames+'</span>'+
                     '</div>'
-                $('#library-modal #media .append-img').append(cols)
+                    
             })
+
+            if($('#library-modal #media .append-img').length >0){
+                $('#library-modal #media .append-img').append(cols)
+            }else{
+                var  rows ='<div class="row row-cols-xs-1 row-cols-sm-1 row-cols-md-6 append-img">' +
+                cols +
+                '</div>'
+                $('#library-modal #media').html(rows)
+            }
+
+          
         }
 
         //event
-       /* $('.img-selected').unbind('click').bind('click',function(){
+        $('#library-modal #media .img-selected').off('click').on('click',function(){
+                    
             var image_name = $(this).attr('img_name')
-            if($me.closest('div').hasClass('product-image')){
-                $me.closest('div').find('#prd_img').val(image_name)
-            }else if($me.closest('div').hasClass('library-images')){
-                var image_name_selected = $me.closest('div').find('.prd-library').val()
+            if($me.closest('.clicked').hasClass('specific-image')){
+                
+                $me.closest('.clicked.specific-image').find('.image-spec').val(image_name)
+
+                var span = '<span  class="prd-img-page product-images-span relative" >'+
+                ' <img src="'+libary_path+''+image_name+'" class="img-thumbnail product-images" img_name="'+image_name+'"  alt="Thiet ke web Anh Ho">' +  
+                    '<span class="product-images-span-delete absolute c-cd1818 r-2 box-2 text-right" style="cursor: pointer;">X</span>'+
+                '</span>'  
+                    
+                $me.closest('.clicked.specific-image').find('.image-spec-div').html(span)
+
+            }else if($me.closest('.clicked').hasClass('addition-images')){
+                
+                var image_name_selected = $me.closest('.clicked.addition-images').find('.image-added').val()
                 var wordSearch = new RegExp(`\\b${image_name}\\b`, 'i');
                 var isTrue = wordSearch.test(image_name_selected);
 
                 if(!isTrue){
                     image_name_selected =(image_name_selected =='')?image_name: image_name_selected+','+image_name
-                    $me.closest('div').find('.prd-library').val(image_name_selected)
+                    $me.closest('.clicked.addition-images').find('.image-added').val(image_name_selected)
+                    
+                    var span =''        
+                    if(image_name_selected.indexOf(',')){
+                        
+                        image_name_selected.split(',').forEach(function(item){
+                                span += ' <span  class="prd-img-page product-images-span me-2 relative">'+
+                            ' <img src="'+libary_path+''+item+'" class="img-thumbnail product-images" img_name="'+item+'"  alt="Thiet ke web Anh Ho">' +  
+                            '<span class="product-images-span-delete absolute c-cd1818 r-2 box-2 text-right" style="cursor: pointer;">X</span>'+
+                            '</span>'  
+                        })
+                    }else{
+                        span += ' <span  class="prd-img-page product-images-span relative" >'+
+                            ' <img src="'+libary_path+''+image_name_selected+'" class="img-thumbnail product-images" img_name="'+image_name_selected+'"  alt="Thiet ke web Anh Ho">' +  
+                            '<span class="product-images-span-delete absolute c-cd1818 r-2 box-2 text-right" style="cursor: pointer;">X</span>'+
+                            '</span>'  
+                    }
+
+                    $me.closest('.clicked.addition-images').find('.image-added-div').html(span)
                 }
             }
+            
+            
 
             $('#library-modal').modal('hide')
-        })*/
+        })
     }
 
 }

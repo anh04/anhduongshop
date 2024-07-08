@@ -3,7 +3,7 @@
         <HeadSideBar title ="PRODUCTS"/>
         <ul class="side-bar p-t-1">
             <li class="bg-color-red">
-                <router-link to="/" class=""  >
+                <router-link to="/laptops" class=""  >
                     LAPTOP
                 </router-link>
             </li>

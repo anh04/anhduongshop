@@ -10,6 +10,36 @@
                     <RouterLink to="/admin/products" class="nav-link nav-color box-size">
                         <span class="megamenu-item-inner child-box"> <span>Products</span> </span>
                     </RouterLink>
+
+                    <div class="arrow"></div>
+                    <div class="megamenu-dropdown" style="border-color: #FFFFFF">
+                        <div class="block-main">
+                            <div class="block-main-content">
+                                <div class="block-main-content-link">
+                                    <div class="grid-child col-md-12">
+                                        <ul class="megamenu-sub-items">
+                                            <li class="megamenu-sub-item">
+                                                <RouterLink to="/admin/products" class="megamenu-item-link" style="--bgHover: rgba(255, 255, 255, 0);">
+                                                    <span class="megamenu-item-inner"> <span>Products</span></span>
+                                                </RouterLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="grid-child col-md-12">
+                                        <ul class="megamenu-sub-items">
+                                            <li class="megamenu-sub-item  ">
+                                                <RouterLink to="/admin/laptops"  class="megamenu-item-link" style="--bgHover: rgba(255, 255, 255, 0);">
+                                                    <span class="megamenu-item-inner">
+                                                        <span>Laptops</span>
+                                                    </span>
+                                                </RouterLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item megamenu-item megamenu-item-not-dropdown has-content">
                     <RouterLink to="" class="nav-link nav-color box-size" >

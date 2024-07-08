@@ -12,7 +12,9 @@ const fashionModule: Module<ResponseData> = {
         fashion: <ResponseData>{},
         fashions: <ProductType[]>[],
         specificImgs:[] as String [],
+        specificImgsColor:[] as String [],
         productImgs:[] as String [],
+        
         productSize: [] as any [],
         error:false,
         isShow:false,
@@ -45,7 +47,7 @@ const fashionModule: Module<ResponseData> = {
           },
 
           async productFileter({ commit },payload:any) {
-            commit('BRANDFORFILTER',payload.brands)
+            //commit('BRANDFORFILTER',payload.brands)
               ProductService.getProducts(payload)
                 .then((response) => {
                 commit('PRODUCT_FILTER', response)
@@ -98,6 +100,7 @@ const fashionModule: Module<ResponseData> = {
         GET_FASHION_ID(state:any, payload: ProductType) {
           var specificImgs=[] as String []
           var productImgs =[] as any []
+          var specificImgColors = [] as any []
 
           var obj=[] as any []
 
@@ -159,8 +162,12 @@ const fashionModule: Module<ResponseData> = {
            if(flag1 || flag2 || flag3 || flag4){
             if(item.prd_img !='' && item.prd_img !=null && item.prd_img !=undefined){
               specificImgs = [...specificImgs,...[item.prd_img]]
+              let img_color = {image:item.prd_img, color: item.prd_color}
+              specificImgColors = [...specificImgColors,...[img_color]]
             }else{
               specificImgs = [...specificImgs,...['unknow.png']]
+              let img_color = {image:'unknow.png', color: item.prd_color}
+              specificImgColors = [...specificImgColors,...[img_color]]
             } 
 
             if(item.addition_img !='' && item.addition_img !=null && item.addition_img !=undefined){
@@ -175,10 +182,11 @@ const fashionModule: Module<ResponseData> = {
            
           }          
            
-         //  console.log(obj)
+         // console.log(specificImgColors)
           state.error = false
           state.isShow =true
           state.fashion = payload
+          state.specificImgsColor = specificImgColors
           state.specificImgs = specificImgs
           state.productImgs =  productImgs
           state.productSize = obj

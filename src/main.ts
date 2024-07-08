@@ -2,10 +2,12 @@ import './assets/main.css'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/mycss.css'
+import './assets/mynav.css'
 import './assets/_root.css'
 import './assets/cart.css'
 import './assets/libraryImage.css'
 import './assets/admin.css'
+import './assets/media.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'

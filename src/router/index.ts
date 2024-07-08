@@ -8,6 +8,12 @@ import Payment from '@/views/pages/Payment.vue'
 import ProductList from '@/views/admin/ProductList.vue'
 import Product from '@/views/admin/Product.vue'
 import Fashions from '@/views/pages/Fashions.vue'
+import AddLaptop from '@/views/admin/AddLaptop.vue'
+import AdminLaptops from '@/views/admin/AdminLaptops.vue'
+import Laptops from '@/views/pages/Laptops.vue'
+import Laptop from '@/views/pages/Laptop.vue'
+import Orders from '@/views/pages/Orders.vue'
+import Order from '@/views/pages/Order.vue'
 //import Pd1 from '@/views/admin/Pd1.vue'
 //import Pd2 from '@/views/admin/Pd2.vue'
 
@@ -71,15 +77,74 @@ const routes = [
   },
 
   {
+    path: '/admin/laptop',
+    name: 'Add Laptop ',
+    component: AddLaptop,
+    meta: {
+        layout: 'admin'
+      }
+  },
+
+  {
+    path: '/admin/laptop/:id',
+    name: 'Laptop ',
+    component: AddLaptop,
+    meta: {
+        layout: 'admin'
+      }
+  },
+
+  {
+    path: '/admin/laptops',
+    name: 'Admin Laptop',
+    component: AdminLaptops,
+    meta: {
+        layout: 'admin'
+      }
+  },
+
+  {
     path: '/fashions',
     name: 'Fashions',
     component:Fashions,
     meta :{
       layout: 'default'
     }
-  }
+  },
 
- 
+  {
+    path: '/laptops',
+    name: 'Laptops',
+    component:Laptops,
+    meta :{
+      layout: 'default'
+    }
+  },
+
+  {
+    path: '/laptop/:id',
+    name: 'Product Laptops',
+    component: Laptop,
+    meta: {
+        layout: 'default'
+      }
+  },
+  {
+    path: '/orders',
+    name: 'Review Order List',
+    component: Orders,
+    meta: {
+        layout: 'default'
+      }
+  },
+  {
+    path: '/order/:id',
+    name: 'Review Order Detail',
+    component: Order,
+    meta: {
+        layout: 'default'
+      }
+  },
 ]
 
 const router = createRouter({

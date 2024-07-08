@@ -1,5 +1,5 @@
 <template>
-   <div id="p-cart">
+   <div id="p-cart " class="container">
     <div class="row mb-4">
         <div class="col">
             <div class="d-flex f-18 mt-3" style="cursor: pointer">

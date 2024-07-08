@@ -24,4 +24,5 @@ export default interface ProductType {
     brand_name:string;
     prod_attr: string;
     prod_special_point: string;
+    prod_size_inch: string;
   }
