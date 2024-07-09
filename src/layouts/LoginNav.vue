@@ -1,8 +1,8 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="height: 80px;">
             <div class="container">
                 <a class="navbar-brand" href="http://shop:8000">
-                    <img class="w-167" src="http://shop:8000/assets/images/logo_3.png">
+                    <img class="w-167" src="../assets/images/logo_3.png" >
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

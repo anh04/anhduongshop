@@ -100,6 +100,7 @@ export default {
 
     }
   },
+  
   beforeCreate: function() {
         document.body.className = '';
         let myDiv = document.getElementById("app");

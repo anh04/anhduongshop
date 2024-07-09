@@ -14,6 +14,7 @@ import Laptops from '@/views/pages/Laptops.vue'
 import Laptop from '@/views/pages/Laptop.vue'
 import Orders from '@/views/pages/Orders.vue'
 import Order from '@/views/pages/Order.vue'
+import Register from '@/views/pages/Register.vue'
 //import Pd1 from '@/views/admin/Pd1.vue'
 //import Pd2 from '@/views/admin/Pd2.vue'
 
@@ -143,6 +144,14 @@ const routes = [
     component: Order,
     meta: {
         layout: 'default'
+      }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: {
+        layout: 'login'
       }
   },
 ]

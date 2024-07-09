@@ -135,6 +135,22 @@ class ProductService {
       login =(params:any)=>{
         return Axio.post('login', qs.stringify(params), config).then(response => response.data); 
       }  
+      
+
+       /**************************** */
+       logout =(params:any)=>{
+        return Axio.get('logout').then(response => response.data); 
+      } 
+      
+      /**************************** */
+      register =(params:any)=>{
+        return Axio.post('register', qs.stringify(params), config).then(response => response.data); 
+      } 
+
+       /**************************** */
+       checkEmail =(params:any)=>{
+        return Axio.post('checkemail', qs.stringify(params), config).then(response => response.data); 
+      }
   }
   
   

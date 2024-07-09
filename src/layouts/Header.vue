@@ -17,19 +17,42 @@
                     </span>
                 </div>
                 <div class="col-md-1 col-lg-2 col-sm-1 media-xs-1 force-hidden">
-                    <div class="row justify-content-center align-items-center  show-modal-login" @click="showModalLogin" style="cursor:pointer">
-                        <div class="col-md-12 col-lg-3">
-                            <div class="box-size-2  bg-orange">
-                                <span class="fa-color-gray-light child-box">
-                                    <font-awesome-icon :icon="['fas', 'fa-user']" /> 
-                                </span>
+                    <div class="  show-modal-login" @click="showModalLogin" style="cursor:pointer">
+                        <div class="row justify-content-center align-items-center" v-if="userLogin.id !=null">
+                            <div class="col-md-12 col-lg-3 tooltip-media" style="cursor: pointer">
+                                <div class="box-size-2 bg-orange " >
+                                    <span class="c-login-success  child-box">
+                                        <font-awesome-icon :icon="['fas', 'fa-user']" /> 
+                                    </span>
+                                </div>
+                                <div class="box-size-media">
+                                    {{ userLogin.first_name }} {{ userLogin.last_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-0 col-lg-9 media-display-none" >
+                                <div class="flex flex-md-column flex-sm-row">
+                                    <span class="f-12 c-ededed" id="user-name">{{ userLogin.first_name }} {{userLogin.last_name }}</span>
+                                    <span class="f-13 bold c-ededed  media-ps-15 media-color-danger" style="cursor:pointer">
+                                        Sign out
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-0 col-lg-9 media-display-none" >
-                            <span class="f-12 c-ededed">Account &nbsp;</span>
-                            <span class="f-13 bold c-ededed media-ps-15">Sign in</span>
+                        <div class="row justify-content-center align-items-center" v-else>
+                            <div class="col-md-12 col-lg-3">
+                                <div class="box-size-2  bg-orange">
+                                    <span class="fa-color-gray-light child-box">
+                                        <font-awesome-icon :icon="['fas', 'fa-user']" /> 
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-0 col-lg-9 media-display-none" >
+                                <span class="f-12 c-ededed">Account &nbsp;</span>
+                                <span class="f-13 bold c-ededed media-ps-15">Sign in</span>
 
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
                 <div class="col-md-1 col-lg-2 col-sm-1 media-xs-1 force-hidden">
@@ -82,17 +105,21 @@
 
 <script lang="ts">
 import type CartType from '@/types/CartType'
-import { mapState } from 'vuex'
+import type UserType from '@/types/UserType'
+import { mapState, mapActions } from 'vuex'
 import store from '@/store'
 export default{
     data(){
         return {
-            productBuy:[]= store.state.itemCart
+            productBuy:[]= store.state.itemCart,
+          //  userLogin: {} as any,
+            forceUpdate: 0
         }
     },
     computed:{
         ...mapState({
-            itemCarts: state=>state.itemCart
+            itemCarts: state=>state.itemCart,
+            userLogin: state => state.login
         }),
         setAmountOfProduct(){
            // console.log("khong change")
@@ -120,9 +147,21 @@ export default{
                 }
                 
             }
-        }
+        },
+        // setUserLogin(){
+        //     if(this.forceUpdate==0){
+        //         this.userLogin =  this.userLogin1
+        //     }else{
+        //         let isLogin = localStorage.getItem('login') as any
+        //         this.userLogin =  JSON.parse(isLogin)
+        //     }
+            
+        // }
     },
     methods: {
+        ...mapActions([
+                'logout'
+            ]),
         checkCart(){
             if(this.productBuy.length >0){
                 //console.log("dung")
@@ -138,10 +177,24 @@ export default{
             // }
         },
         showModalLogin(){
-            ($('#login-modal') as any).modal('show')
+            if(this.userLogin.id !=null){
+                this.logout({})
+            }else{
+                ($('#login-modal') as any).modal('show')
+            }
+            
         }
     },
     mounted(){
+        let isLogin = localStorage.getItem('login') as any
+        isLogin =  JSON.parse(isLogin)
+        
+        if(isLogin.id !=null){  
+          //  this.forceUpdate = 1
+            store.dispatch('forceUpdateLoginState', isLogin)    
+        }else{
+           // this.forceUpdate = 0
+        }
         //this.checkCart()
         // const plugin = document.createElement("script");
 		// 	plugin.setAttribute(

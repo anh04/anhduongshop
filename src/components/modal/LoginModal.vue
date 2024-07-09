@@ -34,7 +34,7 @@
                                     </span>
                             </div>
                         </div>
-                        {{userLogin}}
+                       
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
@@ -62,8 +62,7 @@
                             </div>
                         </div>
                     </form>
-
-
+                    {{hideLoginmodal}}
                 </div>
             </div>
 
@@ -86,7 +85,14 @@ import store from '@/store'
         computed:{
             ...mapState({
                 userLogin: state => state.login
-                })
+                }),
+            
+            hideLoginmodal(){
+                if(this.userLogin.id !=null){
+                    ($('#login-modal') as any).modal('hide')
+                }
+                
+            }
         },
 
         methods:{
