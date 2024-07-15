@@ -81,8 +81,9 @@
             <div class="row my-4">
                 <div class="col">                    
                     <Pagination
-                        :totalPages="lastPages"
-                        :currentPage="currentPage"
+                        :totalPages="totalPage"
+                        :current-page="currentPage"
+                        :maxVisibleButtons ="maxVisibleButtons"
                         @pagechanged="onPageChange"
                         />
                 </div>
@@ -118,7 +119,9 @@ export default{
             limit: 5, 
             pending: false,
             currentPage: 1,
-            lastPages:1
+            lastPages:1,
+            totalPage:1,
+            maxVisibleButtons:3
         };
     },
     beforeCreate() {
@@ -143,14 +146,14 @@ export default{
             // let page= this.page
             // let limit= this.limit
             let payload ={
-                page : this.page,
+                page : 1,
                 limit : this.limit
             }
 
                 ProductService.getProducts(payload).then((res)=>{
                     this.products = res.data
-                    this.lastPages = res.last_page
-                    this.totalRecord = res.total
+                    this.totalPage = res.last_page
+                   if(this.maxVisibleButtons > res.last_page)  this.maxVisibleButtons = res.last_page
 
                     res.data.forEach(function(it1){
                       var it2 = it1.prod_attr
@@ -169,12 +172,17 @@ export default{
         },
         
         onPageChange(page: number){
+          
             let payload ={
                 page : page,
                 limit : this.limit
             }
             ProductService.getProducts(payload).then((res)=>{
                     this.products = res.data
+                    this.currentPage = page;
+                    this.totalPage = res.last_page
+                    if(this.maxVisibleButtons > res.last_page)  this.maxVisibleButtons = res.last_page
+
                 })
         },
     },

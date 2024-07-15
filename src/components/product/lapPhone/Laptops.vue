@@ -99,7 +99,7 @@ export default{
      },
     methods: {
         ...mapActions([
-        'laptopList'
+        'laptopList','laptopFirstList'
         ]),
         /*
         discount function
@@ -185,7 +185,7 @@ export default{
         typeGroup: 'Laptop'
         }
 
-        this.laptopList(payload);
+        this.laptopFirstList(payload);
     }
 }
 </script>

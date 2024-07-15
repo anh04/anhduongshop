@@ -81,7 +81,12 @@
         :key="componentKey"
        
         />
-
+        <div class="row mt-3">
+        <div class="form-check form-check-inline ms-2">
+            <input class="form-check-input" type="checkbox" v-model="isSuggested"  :checked="isSuggested" >
+            <label class="form-check-label" :for="prd_suggest">Product suggested</label>
+        </div>
+    </div>  
         <div class="row justify-content-md-center my-5">            
             <div class="col-md-2 col-xs-6 col-sm-6">
                 <button class="btn btn-secondary form-control">CANCEL</button>
@@ -129,7 +134,7 @@ export default{
             search: '',
             pending: false,  
             isSaving:false,
-            
+            isSuggested: false,
             componentKey: 0,   
             prduct: {
                 prd_id:'',
@@ -145,6 +150,7 @@ export default{
                 prd_similar :'',
                 prod_attr:'',
                 prod_special_point: '',
+                prd_suggest: ''
             },
             typeOption :[] as {prd_type_id:number, prd_type_name:string}[],
 
@@ -267,7 +273,9 @@ export default{
                  this.prd_disctiption1 = response.prd_disctiption==null?'':response.prd_disctiption
                  this.prod_special_point1 = response.prod_special_point==null?'':response.prod_special_point
                 
-                
+                 if(response.prd_suggest=='1'){
+                    this.isSuggested = true
+                }
                 })
                 .catch((e: Error) => {
                   console.log(e);
@@ -297,6 +305,11 @@ export default{
             prd_att.push(prd_att_item)
         })
 
+        var prd_suggest_val = 0
+       if(this.isSuggested){
+        prd_suggest_val = 1
+       }
+
         let data = {
             prd_id:this.prduct.prd_id,
             prod_size_inch: this.prduct.prod_size_inch,
@@ -307,7 +320,8 @@ export default{
             prd_sku:this.prduct.prd_sku,
             prd_disctiption:this.prd_disctiption1,
             prd_short_disctiption:this.prduct.prd_short_disctiption,
-            prod_special_point: this.prod_special_point1
+            prod_special_point: this.prod_special_point1,
+            prd_suggest : prd_suggest_val,
         }
        
     //     console.log(data)

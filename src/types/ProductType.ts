@@ -25,4 +25,6 @@ export default interface ProductType {
     prod_attr: string;
     prod_special_point: string;
     prod_size_inch: string;
+    prd_suggest: Boolean
+    prd_type_group: string
   }

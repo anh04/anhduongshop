@@ -6,7 +6,7 @@
                 <button type="button" class="btn btn-info">Add Product</button>
             </RouterLink>
         </div>
-        <div class="">
+        <div class="" style="min-height: 500px;">
             <table class="table table-bordered" >
                 <thead>
                 <tr>
@@ -29,7 +29,7 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     <tr  v-for="(item, index) in products" :key="item.prd_id">
                         <td>{{index+1}}</td>
                         <td>{{ item.prd_name}}</td>

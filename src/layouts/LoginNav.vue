@@ -18,11 +18,11 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link" href="http://shop:8000/login">Login</a>
+                            <RouterLink to="/login" class="nav-link">Login</RouterLink>
                         </li>
                     
                         <li class="nav-item">
-                            <a class="nav-link" href="http://shop:8000/register">Register</a>
+                            <RouterLink to="/register" class="nav-link">Register</RouterLink>
                         </li>
                     </ul>
                 </div>

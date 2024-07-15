@@ -32,7 +32,7 @@
         <div class="col col-md-7 col-sm-12">
           <div class="row">
             <div class="col f-17 bold">SHIPPMENT INFO</div>
-          </div>{{shipmentInfo}}
+          </div>
           <div class="row mt-2">
             <form class="input-form-control">
                 <div class="row">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col col-md-3 col-sm-12 ">
                         <label class="mb-1">Phone Number(*)</label>
-                        <input type="text" class="form-control shipment_phone el" v-model="shipment_phone">
+                        <input type="text" class="form-control shipment_phone el" ref="shipment_phone">
                     </div>
                     <div class="col col-md-3 col-sm-12 ">
                         <label class="mb-1">Email address(*)</label>
@@ -54,22 +54,22 @@
                         <label class="mb-1">State(*)</label>
                         <select class="form-select shipment_state el" v-model="shipment_state">
                             <option value=""></option>
-                            <option :value="op.code" v-for="(op,index) in stateList" :key="index" :selected="op.code==shipment_state">{{ op.state }} </option>
+                            <option :value="op.code" v-for="(op,index) in stateList" :key="index">{{ op.state }} </option>
 
                         </select>
                     </div>
                     <div class="col col-md-5 col-sm-12 ">
                         <label class="mb-1">City(*)</label>
                         <select class="form-select shipment_city el" v-model="shipment_city">
-                            <option :value="shipment_city" selected v-if="shipment_city !=''">{{ shipment_city }} </option>
-                            <option :value="cty.city" v-for="(cty,index) in cities" :key="index" v-else>{{ cty.city }} </option>
+                            <option value=""></option>
+                            <option :value="cty.city" v-for="(cty,index) in cities" :key="index">{{ cty.city }} </option>
                         </select>
                     </div>
                     <div class="col col-md-3 col-sm-12 ">
                         <label class="mb-1">Zipcode(*)</label>
                         <select class="form-select shipment_zipcode el" v-model="shipment_zipcode">
-                            <option :value="shipment_zipcode" selected v-if="shipment_zipcode !=''">{{ shipment_zipcode }} </option>
-                            <option :value="z.zip" v-for="(z,index) in zips" :key="index" v-else>{{ z.zip }} </option>
+                            <option value=""></option>
+                            <option :value="z.zip" v-for="(z,index) in zips" :key="index">{{ z.zip }} </option>
                         </select>
                     </div>
                 </div>
@@ -209,30 +209,18 @@ export default{
     },
     computed:{
         ...mapState({
-            userLogin : state => state.login
-        }),
-
-        shipmentInfo(){
-            this.full_name = this.userLogin.first_name + this.userLogin.last_name +''
-            this.shipment_phone = this.userLogin.phone
-            this.shipment_email = this.userLogin.email
-            this.shipment_state = this.userLogin.state
-            this.shipment_city = this.userLogin.city
-            this.shipment_zipcode = this.userLogin.zip
-            this.shipment_address = this.userLogin.address
-        }
+            userLogin: state => state.login
+        })
     },
-    
 
     created(){
         this.getState()
-       
     },
     methods:{
         async payment(){            
            let data_post = {
                 full_name: this.full_name,
-                shipment_phone: this.shipment_phone,   
+                shipment_phone: this.$refs.shipment_phone.value,   
                 shipment_email: this.shipment_email,
                 shipment_state: this.shipment_state,
                 shipment_city: this.shipment_city,
@@ -244,7 +232,6 @@ export default{
                 
             }
 
-            
             let method = this.method
 
            let  yourCart= localStorage.getItem('yourCart')
@@ -325,13 +312,10 @@ export default{
                 .catch((e: Error) => {
                 console.log(e);
                 });
-        },
-
-       
+        }
         
     },
     mounted(){
-        console.log(this.userLogin)
         $('.shipment_phone').inputmask('(999) 999-9999');
 
        var orgThis = this

@@ -8,7 +8,7 @@
       </div>
    </div>
    <div v-if="specialPoints !=null && specialPoints !='null'">
-      <div class="mb-3 m-l--15"  v-html="specialPoints"> </div>   
+      <div :class="['mb-3',{'m-l--15':isPadding},{'f-18':!isPadding}]"  v-html="specialPoints"> </div>   
    </div>
   
 </template>
@@ -16,6 +16,7 @@
    export default{
       props:{
          specialPoints: String,
+         isPadding: Boolean
 
       }
    }

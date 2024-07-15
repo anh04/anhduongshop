@@ -1,6 +1,6 @@
 <template>
    <header class="grid items-center">
-    <topbar id="topbar" > </topbar>
+    <topbar id="topbar"> </topbar>
     <headerbar id="headerbar">
         <div class="container">
             <div class="row h-100 justify-content-md-center justify-content-sm-start align-items-center media-flex">
@@ -8,13 +8,19 @@
                     <img class="w-167" src="../assets/images/logo_1.png" >
                 </div>
                 <div class="col-md-7 col-lg-4 col-sm-1 block-search media-xs-1 ">
-                    <input class="form-control me-2 border-dark-red media-search text-search" type="search" placeholder="Search" aria-label="Search">
-                    <span class="icon-search">
+                    <input v-model="valFilter" :class="['form-control me-2 border-dark-red media-search text-search',{'rounded-bottom-lr-none':isShow}]" type="text" placeholder="Search" aria-label="Search" >
+                    <span class="icon-search" @click="search" style="cursor: pointer;" v-if="!isShow">
                         <font-awesome-icon :icon="['fab', 'fa-sistrix']" /> 
+                    </span>
+                    <span class="icon-delete" @click="hiddenSearch" style="cursor: pointer;" v-else >
+                        x
                     </span>
                     <span class="icon-back media-is-hidden hidden-force" style="cursor:pointer">
                         <font-awesome-icon :icon="['fas', 'fa-angle-up fa-rotate-270']" /> 
                     </span>
+                    <FilterProduct 
+                        :filtervalue="filterResult" 
+                        :show ="isShow" />
                 </div>
                 <div class="col-md-1 col-lg-2 col-sm-1 media-xs-1 force-hidden">
                     <div class="  show-modal-login" @click="showModalLogin" style="cursor:pointer">
@@ -104,16 +110,24 @@
 </template>
 
 <script lang="ts">
+import productsService from '@/services/productsService';
 import type CartType from '@/types/CartType'
 import type UserType from '@/types/UserType'
+import FilterProduct from '@/components/FilterProduct.vue'
 import { mapState, mapActions } from 'vuex'
 import store from '@/store'
 export default{
+    components:{
+        FilterProduct
+    },
     data(){
         return {
             productBuy:[]= store.state.itemCart,
           //  userLogin: {} as any,
-            forceUpdate: 0
+            forceUpdate: 0,
+            valFilter: '',
+            filterResult: [],
+            isShow: false
         }
     },
     computed:{
@@ -183,6 +197,28 @@ export default{
                 ($('#login-modal') as any).modal('show')
             }
             
+        },
+
+        search(){
+            if(this.valFilter !='' && this.valFilter !=null){
+                let value = {prd_name: this.valFilter}
+                productsService.searchProduct(value).then((response)=>{
+                    this.filterResult = response
+                    if(response.length >0) {
+                        this.isShow = true
+                    }else{
+                        this.isShow = false
+                    }
+                    console.log(response.length)
+                })
+            }else{
+                this.isShow = false
+            }
+            
+        },
+        hiddenSearch(){
+            this.valFilter =''
+            this.isShow = false
         }
     },
     mounted(){

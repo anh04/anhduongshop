@@ -231,6 +231,10 @@ body{
     z-index: 10;
 }
 
+.z-index-101{
+    z-index: 101;
+}
+
 .possion-l-0{
     left:0;
 }
@@ -352,6 +356,15 @@ body{
 .w-80{
     width: 80%!important;
 }
+.w-94{
+    width: 94.6%!important;
+}
+.w-95{
+    width: 95%!important;
+}
+.w-96{
+    width: 96.5%!important;
+}
 .w-167{
     width: 167px;
 }
@@ -365,6 +378,11 @@ body{
 .wh-40{
     width: 40px;
     line-height: 40px;
+}
+
+.wh-80{
+    width: 80px;
+    height: 80px;
 }
 
 .f-12{
@@ -519,6 +537,11 @@ div.file_upload {
 .img-div img{
     width: 100%;
     height: 100%;
+}
+
+.wh-80 > img{
+    height: 100%;
+    width: 100%;
 }
 
 .discount-bg{
@@ -852,6 +875,11 @@ fieldset .-mt-15{
     object-fit: contain;
 }
 
+.prd-item .w-180 {
+   width: 180px!important;
+   margin: auto;
+}
+
 .prd-item-details a{
     text-decoration: none;
     font-size: 12px;
@@ -950,8 +978,6 @@ fieldset .-mt-15{
     object-fit:contain;
     background-size: contain;
 }
-
-
 
 
 .prd-item-decrease{
@@ -1456,3 +1482,30 @@ div.p-s{
     min-height: 200px!important;
 }
 
+.bg-discount-student {
+    margin-bottom: 10px;
+}
+
+.bg-discount-student>div {
+    
+    background-position: right bottom;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background-image: url('../assets/images/discount-student.png');
+    height:100px;
+    overflow: hidden;
+    background-repeat:no-repeat;
+    background-size: cover;
+    object-fit: fill;
+}
+
+.box-2-2{
+    width:2.3rem;
+    height: 2.3rem;
+    display: block;
+}
+
+.box-2-2 img{
+    width: 100%;
+    height: 100%;
+}

@@ -28,4 +28,5 @@
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-border-radius-none:0;
     --bs-border-radius-01: 0.1rem
+    --bs-border-radius-0: 0rem;
 }

@@ -161,10 +161,31 @@ nav .megamenu-dropdown .megamenu-sub-items:not(.content) .megamenu-sub-item {
     list-style-type: none;
 }
 
+ul.filter-product{
+    padding-left: 0!important;
+    margin-bottom: 0!important;
+}
+
 ul.side-bar{
     padding-left: 0!important;
     border: 1px #d6b9b9 solid;
     box-shadow: 1px 1px 1px 1px #ccc;
+}
+
+ul.filter-product li{
+    line-height: 40px;
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+ul.filter-product li:last-child{
+    line-height: 40px;
+    border-bottom: none;
+    list-style: none;
+    cursor: pointer;
+    padding-left: 10px;
 }
 
 ul.side-bar li{
@@ -174,18 +195,17 @@ ul.side-bar li{
     cursor: pointer;
 }
 
-ul.side-bar li:hover {
+ul.side-bar li:hover, ul.filter-product li:hover {
     background-color: #cd1818;
 }
-ul.side-bar li:hover a{
+ul.side-bar li:hover a, ul.filter-product li:hover{
     background-color: #cd1818;
 }
-ul.side-bar li a{
+ul.side-bar li a, ul.filter-product li a{
     text-decoration: none!important;
     padding-left: 34px;
     color: white;
 }
-
 
 .bar-left-red {
     border-top: 50px solid #cd1818;
@@ -304,6 +324,14 @@ li.megamenu-item.has-content .megamenu-sub-items.content>.megamenu-sub-item:not(
     color:#ededed;
 }
 
+.icon-delete{
+    right: 24px;
+    top: 8px;
+    position:absolute;
+    font-size: 18px;
+    color:#ededed;
+}
+
 .icon-back{
     left: -30px;
     top: 12px;
@@ -344,4 +372,16 @@ input.bg-color3::-ms-input-placeholder { /* Edge 12-18 */
 
 form#register-form input, form#register-form select{
     background-color: white;
+}
+
+.form-control.rounded-bottom-lr-none{
+    border-bottom-left-radius: var(--bs-border-radius-0);
+    border-bottom-right-radius: var(--bs-border-radius-0);
+}
+
+.rounded-top-none{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: var(--bs-border-radius);
+    border-bottom-right-radius: var(--bs-border-radius);
 }

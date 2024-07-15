@@ -8,24 +8,61 @@
           <div class="col-md-6 col-sm-12 col-xm-12">
             <div class="justify-content-center d-flex bg-color-f6f6f4 relative" v-if="isShow">
               <FashionCarousel
-              :proplibraryImages="firstProductImages"/>    
-                    
+              :proplibraryImages="firstProductImages"/> 
             </div>
+            <div class="row">
+              <div class="col">
+                <SpecialPoint :specialPoints="`${laptop.prod_special_point}`" />
+              </div>
+          </div>
          </div>
+         
           <!----------Right--------->
           <div class="col-md-6 col-sm-12 col-xm-12">
             <div class="page-pduct d-flex flex-column">
                 <div class="specific-product">
+                  <div class="bg-discount-student">
+                      <div class="col col-11 flex-column">
+                        <b class="f-18 text-white">EXTRA <span class="c-cd1818 bold">$10.00</span> DISCOUNT</b>
+                        <div class="text-white">For Students</div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col col-md-3 flex-column align-items-center">
+                          <div class="wh-80">
+                            <img class="" src="/src/assets/images/qcode.png" >
+                          </div>
+                          <div>Scan download App</div>
+                      </div>
+                      <div class="col col-md-5 flex-column">
+                        <div class="f-22">VIP Gits</div>
+                        <div>
+                          Earn & Use Points
+                          for Loyalty Customers
+                        </div>
+                      </div>
+                      <div class="col col-md-4 flex-column">
+                        <img class="" src="/src/assets/images/appstore.png" style="height: 40px; width:136px">
+                        <img class="mt-1" src="/src/assets/images/ggplay.png" style="height: 40px; width:136px">
+                      </div>
+                  </div>
+                 
                   <input type="hidden" class="prd_id" v-model="laptop.prd_id">
                   <input type="hidden" class="prd_name" v-model="laptop.prd_name">
                   <input type="hidden" class="prd_price" v-model="prd_price">
                   <input type="hidden" class="prd_regular_price" v-model="prd_regular_price">
+                  <input type="hidden" class="prd_type" v-model="laptop.prd_type">
+                  <input type="hidden" class="prd_type_group" v-model="laptop.prd_type_group">
 
                   <h1> <span class="p-title">{{laptop.prd_name }}</span> </h1>
 
                   <div class="mt-3">
                     <span class="p-price">${{ Number(prd_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
                     <span class="prd-regular-price ms-2">${{Number(prd_regular_price).toLocaleString(undefined, {minimumFractionDigits: 2})}}</span>
+                  </div>
+
+                  <div class="mt-3">
+                    <b>+10.200 VIP Gift points</b>
                   </div>
                  
                   <div v-if="isShow && specificImgsColor.length >0">
@@ -47,7 +84,7 @@
                   <div class="mt-3"></div>
 
                   <ProductPurchaseInfo />
-                  <SpecialPoint :specialPoints="`${laptop.prod_special_point}`" />
+                  
                 </div>
             </div>
           </div>

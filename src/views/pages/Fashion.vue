@@ -12,14 +12,16 @@
                     
             </div>
          </div>
-          <!----------Right--------->
+          <!----------Right---------> 
           <div class="col-md-6 col-sm-12 col-xm-12">
             <div class="page-pduct d-flex flex-column">
                 <div class="specific-product">
                   <input type="hidden" class="prd_id" v-model="fashion.prd_id">
                   <input type="hidden" class="prd_name" v-model="fashion.prd_name">
                   <input type="hidden" class="prd_price" v-model="prd_price">
-                  <input type="hidden" class="prd_regular_price" v-model="prd_regular_price">
+                  <input type="hidden" class="prd_regular_price" v-model="prd_regular_price"> 
+                  <input type="hidden" class="prd_type" v-model="fashion.prd_type">
+                  <input type="hidden" class="prd_type_group" v-model="fashion.prd_type_group">
 
                   <h1> <span class="p-title">{{fashion.prd_name }}</span> </h1>
 
@@ -56,7 +58,7 @@
                   <div class="mt-3"></div>
 
                   <ProductPurchaseInfo />
-                  <SpecialPoint :specialPoints="`${fashion.prod_special_point}`" />
+                  <SpecialPoint :specialPoints="`${fashion.prod_special_point}`" :isPadding ="true" />
                 </div>
             </div>
           </div>
@@ -209,8 +211,7 @@ export default {
           this.product_size = 'Large'
         }else{
           this.product_size = 'XLarge'
-        }
-        
+        }        
         
       }else{
         this.prd_regular_price = 0
@@ -259,11 +260,7 @@ export default {
     this.getFashionID(id);       
   },
 
-  mounted(){      
-  
-
-   
-   
+  mounted(){       
    /*
     const plugin = document.createElement("script");
     plugin.setAttribute(

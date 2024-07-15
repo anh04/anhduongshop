@@ -69,11 +69,13 @@
 </template>
 
 <script lang="ts">
-import  { createNamespacedHelpers } from 'vuex'
+
 import type KeyValue from '@/types/KeyValue'
 import type CartType from '@/types/CartType'
 // import {addtoCart, changeProdductInCart, deleteProdductInCart} from '@/composables/cart'
 import {addtoCart, changeProdductInCart, deleteProdductInCart} from '@/composables/cart'
+
+import  { createNamespacedHelpers } from 'vuex'
 import store from '@/store'
 import { mapState } from 'vuex'
 
@@ -93,7 +95,8 @@ export default{
     data(){
         return{
              path_img1:config,
-             itmCart : this.itemCarts
+             itmCart : this.itemCarts,
+             
         }
     },
     computed:{
@@ -105,8 +108,7 @@ export default{
            // console.log("khong change")
            // console.log(this.itemCarts)
             if(this.itemCarts.length >0){
-                return this.itemCarts
-                
+                return this.itemCarts                
             }else{
                 let yourCart_json = localStorage.getItem('yourCart')
                 if(yourCart_json !='' && yourCart_json != null && yourCart_json != undefined){
@@ -118,12 +120,12 @@ export default{
                 }
                 
             }
-        }
+        },
+
+        
     },
     methods:{
-        // isCheckFromCart(){
-        //     return  this.isFromCart
-        // }
+   
     },
     mounted(){
         var isFromCart =this.fromCart

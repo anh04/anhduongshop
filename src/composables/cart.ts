@@ -34,6 +34,8 @@ import type DiscountType from '@/types/DiscountType'
         item_cart['prd_name']= el.find('.prd_name').val()+''
         item_cart['prd_price']= Number(el.find('.prd_price').val())
         item_cart['prd_regular_price']= Number(el.find('.prd_regular_price').val())
+        item_cart['prd_type']  = el.find('.prd_type').val()
+        item_cart['prd_type_group']  = el.find('.prd_type_group').val()
         if(fromCart){
             item_cart['prd_color']= el.find('.prd_color').val()+''
             item_cart['prd_size']= el.find('.prd_size').val()+''
@@ -97,7 +99,8 @@ import type DiscountType from '@/types/DiscountType'
     item_cart['prd_name']= el.find('.prd_name').val()+''
     item_cart['prd_price']= Number(el.find('.prd_price').val())
     item_cart['prd_regular_price']= Number(el.find('.prd_regular_price').val())
-
+    item_cart['prd_type']  = el.find('.prd_type').val() 
+    item_cart['prd_type_group']  = el.find('.prd_type_group').val()
     if(fromCart){
         item_cart['prd_color']= el.find('.prd_color').val()+''
         item_cart['prd_size']= el.find('.prd_size').val()+''

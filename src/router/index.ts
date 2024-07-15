@@ -15,6 +15,9 @@ import Laptop from '@/views/pages/Laptop.vue'
 import Orders from '@/views/pages/Orders.vue'
 import Order from '@/views/pages/Order.vue'
 import Register from '@/views/pages/Register.vue'
+import Login from '@/views/pages/Login.vue'
+
+import store from '@/store'
 //import Pd1 from '@/views/admin/Pd1.vue'
 //import Pd2 from '@/views/admin/Pd2.vue'
 
@@ -49,6 +52,14 @@ const routes = [
     component: Payment,
     meta: {
         layout: 'default'
+      },
+      beforeEnter(to, from, next) {
+        let isLogin = store.state.login
+        if (isLogin.id !=null) {
+          next()
+        } else {
+          next('/fashions')
+        }
       }
   },
   {
@@ -57,6 +68,14 @@ const routes = [
     component: ProductList,
     meta: {
         layout: 'admin'
+      },
+      beforeEnter(to, from, next) {
+        let isLogin = store.state.login
+        if (isLogin.id !=null) {
+          next()
+        } else {
+          next('/')
+        }
       }
   },
   {
@@ -65,6 +84,14 @@ const routes = [
     component: Product,
     meta: {
         layout: 'admin'
+      },
+      beforeEnter(to, from, next) {
+        let isLogin = store.state.login
+        if (isLogin.id !=null) {
+          next()
+        } else {
+          next('/')
+        }
       }
   },
 
@@ -74,6 +101,14 @@ const routes = [
     component: Product,
     meta: {
         layout: 'admin'
+      },
+      beforeEnter(to, from, next) {
+        let isLogin = store.state.login
+        if (isLogin.id !=null) {
+          next()
+        } else {
+          next('/')
+        }
       }
   },
 
@@ -153,6 +188,14 @@ const routes = [
     meta: {
         layout: 'login'
       }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+        layout: 'login'
+      },
   },
 ]
 

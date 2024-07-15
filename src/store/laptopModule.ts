@@ -36,6 +36,17 @@ const laptopModule: Module<ResponseData> = {
               });
           },
 
+          async laptopFirstList({ commit },payload:any) {         
+            ProductService.getProducts(payload)
+              .then((response) => {
+              commit('LAPTOP_FIRST_LIST', response)
+                
+              })
+              .catch((e: Error) => {
+                console.log(e);
+              });
+          },
+
           async laptopFileter({ commit },payload:any) {
             //commit('BRANDFORFILTER',payload.brands)
               ProductService.getProducts(payload)
@@ -71,6 +82,14 @@ const laptopModule: Module<ResponseData> = {
             state.laptoTalPage = payload.total
             //console.log(state.laptops)
         },
+
+        LAPTOP_FIRST_LIST(state:any, payload: ResponseData) {
+          state.lapError = false
+          state.laptops = payload.data
+          state.laptopLastPage = payload.last_page
+          state.laptoTalPage = payload.total
+          //console.log(state.laptops)
+      },
 
         LAPTOP_FILTER(state:any, payload: ResponseData) {
           state.lapError = false

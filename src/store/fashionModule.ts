@@ -46,6 +46,27 @@ const fashionModule: Module<ResponseData> = {
               });
           },
 
+          async productFirstList({ commit },payload:any) {
+            let limit = payload.limit
+            let page = payload.page
+            let typeGroup = payload.typeGroup
+            
+           
+              ProductService.getProducts(payload)
+                .then((response) => {
+                 // console.log(response.data);
+                 // this.appendProducts(response.data);
+                  //this.pending = false;
+                //  this.lastPage = response.last_page;
+                commit('PRODUCT_FIRST_LIST', response)
+
+                  
+                })
+                .catch((e: Error) => {
+                  console.log(e);
+                });
+            },
+
           async productFileter({ commit },payload:any) {
             //commit('BRANDFORFILTER',payload.brands)
               ProductService.getProducts(payload)
@@ -81,6 +102,14 @@ const fashionModule: Module<ResponseData> = {
             state.total = payload.total
            // console.log(state.fashions)
         },
+
+        PRODUCT_FIRST_LIST(state:any, payload: ResponseData) {
+          state.error = false
+          state.fashions =payload.data
+          state.last_page = payload.last_page
+          state.total = payload.total
+         // console.log(state.fashions)
+      },
 
         PRODUCT_FILTER(state:any, payload: ResponseData) {
           state.error = false

@@ -65,7 +65,7 @@ export default{
     maxVisibleButtons: {
       type: Number,
       required: false,
-      default: 3
+     // default: 3
     },    
     totalPages: {
       type: Number,
@@ -76,7 +76,12 @@ export default{
       required: true
     }
   },
-    
+    data(){
+      return{
+      //  currentPage: this.currentPage1
+      }
+    },
+
     computed: {
     startPage() {
       // When on the first page
@@ -86,12 +91,14 @@ export default{
 
       // When on the last page
       if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons;
+        return this.totalPages - this.maxVisibleButtons +1;
       }
 
       // When inbetween
       return this.currentPage - 1;
     },
+
+
     pages() {
       const range = [];
       for (
@@ -104,7 +111,7 @@ export default{
           isDisabled: i === this.currentPage
         });
       }
-
+     
       return range;
     },
 
@@ -124,6 +131,7 @@ export default{
       this.$emit('pagechanged', this.currentPage - 1);
     },
     onClickPage(page: number) {
+    
       this.$emit('pagechanged', page);
     },
     onClickNextPage() {

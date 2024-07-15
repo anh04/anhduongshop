@@ -16,10 +16,12 @@ import ProductService from '@/services/productsService'
 export default createStore<StateType>({
   state:{
     login:{} as UserType,
+    currentUser:[] as UserType [],
     itemCart:<CartType[]>([]) ,
     error: false,
     testState: 10,
-    discount: <DiscountType>{}
+    discount: <DiscountType>{},
+    rememberMe: false
 
   },
   modules: {
@@ -60,10 +62,15 @@ export default createStore<StateType>({
     login ({ state, commit }, payload:any) {
       ProductService.login(payload)
           .then((response) => {
+            if(payload.remember !=undefined){
+              //save remember
+            }
            // console.log(response);
-          commit('COMMIT_LOGIN', response)
+          commit('COMMIT_LOGIN', response)      
           
-            
+          if(response.id !=undefined && response.id !=null){
+            window.location.replace("http://localhost:5173/");
+        }
           })
           .catch((e: Error) => {
             console.log(e);
@@ -75,6 +82,20 @@ export default createStore<StateType>({
           .then((response) => {
            if(response==1){
             commit('COMMIT_LOGIN', {})
+           }
+          
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
+    },
+
+    adminlogout ({ state, commit }, payload:any) {
+      ProductService.logout(payload)
+          .then((response) => {
+           if(response==1){
+            commit('COMMIT_LOGIN', {})
+            window.location.replace("http://localhost:5173/");
            }
           
           })

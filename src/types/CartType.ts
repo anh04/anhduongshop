@@ -8,6 +8,8 @@ export default interface CartType {
   prd_size: string;
   prd_sex: string;
   color_selected:string,
+  prd_type: string,
+  prd_type_group: string,
   }
 
   interface Foo {

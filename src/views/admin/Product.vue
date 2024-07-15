@@ -81,16 +81,22 @@
         :key="componentKey"
        
         />
-
-        <div class="row justify-content-md-center my-5">            
-            <div class="col-md-2 col-xs-6 col-sm-6">
-                <button class="btn btn-secondary form-control">CANCEL</button>
-            </div>
-
-            <div class="col-md-2 col-xs-6 col-sm-6">
-                <button  class="btn btn-primary form-control" :disabled="isSaving" @click="save()">SAVE</button>
-            </div>
+    <div class="row mt-3">
+        <div class="form-check form-check-inline ms-2">
+            <input class="form-check-input" type="checkbox" v-model="isSuggested"  :checked="isSuggested" >
+            <label class="form-check-label" :for="prd_suggest">Product suggested</label>
         </div>
+    </div>   
+
+    <div class="row justify-content-md-center my-5">            
+        <div class="col-md-2 col-xs-6 col-sm-6">
+            <button class="btn btn-secondary form-control">CANCEL</button>
+        </div>
+
+        <div class="col-md-2 col-xs-6 col-sm-6">
+            <button  class="btn btn-primary form-control" :disabled="isSaving" @click="save()">SAVE</button>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -98,6 +104,7 @@ import { api_img_path } from '@/services/pathFile';
 import  { createNamespacedHelpers } from 'vuex'
 import ProductService from '@/services/productsService'
 import ProductAttribute from '@/components/product/fashion/ProductAttribute.vue';
+import FindProduct from '@/components/common/FindProduct.vue'
 
 import store from '@/store' 
 
@@ -121,7 +128,8 @@ const { mapState, mapActions } = createNamespacedHelpers('adminProductModule')
 
 export default{
     components:{
-        ProductAttribute
+        ProductAttribute,
+        FindProduct
     },
     data() {
     return {
@@ -130,7 +138,10 @@ export default{
             pending: false,  
             isSaving:false,
             
-            componentKey: 0,   
+            componentKey: 0,  
+            prd_similar:'', 
+            isSuggested: false,
+          
             prduct: {
                 prd_id:'',
                 prd_batch_code:'',
@@ -154,6 +165,7 @@ export default{
                 // prd_library :'',
                 prod_attr:'',
                 prod_special_point: '',
+                prd_suggest: ''
             },
             typeOption :[] as {prd_type_id:number, prd_type_name:string}[],
 
@@ -278,9 +290,8 @@ export default{
     computed:{
     ...mapState({
         product1: state => state.product,
-      isShow: state => state.isShow
+        isShow: state => state.isShow
      }),
-
      
   },
   methods:{
@@ -308,6 +319,10 @@ export default{
                  this.prd_disctiption1 = response.prd_disctiption==null?'':response.prd_disctiption
                  this.prod_special_point1 = response.prod_special_point==null?'':response.prod_special_point
                 // console.log(response.prod_attr)
+
+                if(response.prd_suggest=='1'){
+                    this.isSuggested = true
+                }
                 
                 })
                 .catch((e: Error) => {
@@ -317,13 +332,30 @@ export default{
                 this.componentKey +=1
             },
     //--------
+    prdSuggested(prd_similar: string){
+        this.prd_similar = prd_similar
+    },
+
+    //--------
+    isChecked(){
+       // if(this.prd_suggest == 0) this.prd_suggest = 1
+        //else this.prd_suggest = 0
+
+        console.log(this.prd_suggest)
+    },
+    //--------
     save(){
         this.isSaving = true
         let id = this.$route.params.id
         var prd_att = [] as any []
         let prd_att_item ={}
         var quantity =0
+        var image_present =''
         $('.prd_att').each(function(){
+            if($(this).find('.image-spec').val() !='') {
+                image_present = $(this).find('.image-spec').val()+''
+            }
+
             quantity += Number($(this).find('.prd_size_s').val()) + Number($(this).find('.prd_size_m').val()) +
             Number($(this).find('.prd_size_l').val()) + Number($(this).find('.prd_size_xl').val()) 
             prd_att_item = {
@@ -348,6 +380,14 @@ export default{
             prd_att.push(prd_att_item)
         })
 
+       var prd_suggest_val = 0
+       if(this.isSuggested){
+        prd_suggest_val = 1
+       }
+        // console.log(this.isSuggested)
+        // console.log(prd_suggest_val)
+
+        // return
         let data = {
             prd_id:this.prduct.prd_id,
             prd_sex: this.prduct.prd_sex,
@@ -358,11 +398,16 @@ export default{
             prd_sku:this.prduct.prd_sku,
             prd_disctiption:this.prd_disctiption1,
             prd_short_disctiption:this.prduct.prd_short_disctiption,
-            prod_special_point: this.prod_special_point1
+            prod_special_point: this.prod_special_point1,
+            image_present:image_present,
+            prd_similar:this.prd_similar,
+            prd_suggest : prd_suggest_val,
         }
+
+      
        
-       //console.log(prd_att)
-       // return 
+    //    console.log(data)
+    //     return 
         
         if(prd_att.length >0){
             //Object.assign(data,{ "prod_attr": JSON.stringify(prd_att)});

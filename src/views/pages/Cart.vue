@@ -28,15 +28,19 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row my-3" v-if="shocked.length > 0">
         <HeadSideBarRightBlack title="SHOCKING OFFER INCLUDEED"/>
     </div>
-    <div class="row" style="height: 200px;"></div>
+    <SuggestedProducts :products="shocked" 
+    :w_180="true"/>
+    
 
-    <div class="row mt-3">
+    <div class="row my-3" v-if="products.length > 0">
         <HeadSideBarRightBlack title="SUGGESTPRODUCTS"/>
     </div>
-    <div class="row" style="height: 200px;"></div>
+    <SuggestedProducts :products="products" />
+    <div class="row my-3" v-if="products.length < 1 && shocked.length < 1">
+    </div>
    </div>
 
 </template>
@@ -45,12 +49,24 @@ import AddCart from '@/components/cart/AddCart.vue';
 import HeadSideBarRightBlack from '@/components/menu/HeadSideBarRightBlack.vue'
 import Breadcrumb from '@/components/cart/Breadcrumb.vue';
 import SumAmountCart from '@/components/cart/SumAmountCart.vue';
+import SuggestedProducts from '@/components/product/SuggestedProducts.vue';
+
+import ProductService from '@/services/productsService'
+import type  ProductType  from "@/types/ProductType";
+import type CartType from '@/types/CartType'
 export default{
     components: {
     AddCart,
     HeadSideBarRightBlack,
     Breadcrumb,
-    SumAmountCart
+    SumAmountCart,
+    SuggestedProducts,
+   },
+   data(){
+    return {
+        products: [] as any [],
+        shocked: [] as any []
+    }
    },
     beforeCreate: function() {
         document.body.className = 'bg-white';
@@ -58,6 +74,39 @@ export default{
         let myDiv = document.getElementById("app")
 	      myDiv!.setAttribute("style", "max-width:100%;");
     },
+    methods:{
+        suggestedF(){
+            var sugestedType= ''
+            let yourCart_json = localStorage.getItem('yourCart')
+            
+            if(yourCart_json !='' && yourCart_json != null && yourCart_json != undefined){
+                let yourCart =<CartType[]>([]);
+                yourCart = JSON.parse(yourCart_json)           
+
+                yourCart.forEach(function(item){
+                    sugestedType =(sugestedType=='')? item.prd_type_group: sugestedType+','+item.prd_type_group
+                   // console.log(sugestedType)
+                })
+                
+            }
+            let empty = [] as any [] 
+            if(sugestedType !=''){
+                ProductService.suggestedList({suggested:sugestedType}).then((res)=>{
+                   // console.log(res.products)
+                    this.products = res.products
+                    this.shocked = res.shockProduct
+                   // return this.products
+                })
+            }else{                
+                this.products = empty        
+
+            }
+            
+        }
+    },
+    mounted(){
+        this.suggestedF()
+    }
 }
 </script>
 <style scoped >

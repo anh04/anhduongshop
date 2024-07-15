@@ -49,7 +49,13 @@ class ProductService {
             }
           }).then(response => response.data); 
      }
-
+     /**************************** */
+     suggestedList =(payload:{})=>{
+      return Axio.get('suggested-list', {
+          params: payload
+        }
+      ).then(response => response.data); 
+    }
        /**************************** */
        getProductId1 =(id:number)=>{
         return Axio.get('fashion', {
@@ -131,6 +137,10 @@ class ProductService {
           }
         ).then(response => response.data); 
       }
+      /**************************** */
+      searchProduct =(params:any)=>{
+        return Axio.post('product-search', qs.stringify(params), config).then(response => response.data); 
+      }  
       /**************************** */
       login =(params:any)=>{
         return Axio.post('login', qs.stringify(params), config).then(response => response.data); 

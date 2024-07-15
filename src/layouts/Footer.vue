@@ -1,5 +1,5 @@
 <template>
-    <footer class="py-3 mt-1" style="height: 100px;background-color: #f8f8f8; color: #000">
+    <footer class="py-3 mt-1 bg-color3" style="height: 100px;color: #fff">
     <div class="container">
         <div class="row">
             <div class="col bold">About Us</div>
